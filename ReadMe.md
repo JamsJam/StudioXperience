@@ -40,7 +40,7 @@ Le projet se basera sur les technologies suivantes :
 -   PHPUnit (voir la [documentation](https://phpunit.readthedocs.io/en/9.5/)) : librairie PHP pour la gestion des tests unitaires
 -   Webpack (voir la [documentation](https://webpack.js.org/concepts/)) : module bundler pour la partie front-end
 -   SaSS sous la syntaxe SCSS   (voir la [documentation](https://sass-lang.com/documentation)) : préprocesseur CSS pour la partie front-end
--   Full Calandar (voir la [documentation](https://fullcalendar.io/docs)) : librairie JavaScript pour la gestion des calendriers et des événements 
+-   Full Calandar (voir la [documentation](https://github.com/tattali/CalendarBundle)) : librairie JavaScript pour la gestion des calendriers et des événements 
 -   Day.js (voir la [documentation](https://day.js.org/docs/en/installation/installation)) : librairie JavaScript pour la gestion des dates
 -   Swiper.js (voir la [documentation](https://swiperjs.com/get-started)) : librairie JavaScript pour la gestion des sliders
      
