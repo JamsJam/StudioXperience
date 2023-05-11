@@ -45,6 +45,7 @@ Le projet se basera sur les technologies suivantes :
 -   Swiper.js (voir la [documentation](https://swiperjs.com/get-started)) : librairie JavaScript pour la gestion des sliders
      
 -   TinyMCE (voir la [documentation](https://www.tiny.cloud/docs/)) : librairie JavaScript pour la gestion des éditeurs de texte enrichi (WYSIWYG) 
+
 -   Howler.js (voir la [documentation](https://howlerjs.com/)) : librairie JavaScript pour la gestion des sons 
 -   Chart.js (voir la [documentation](https://www.chartjs.org/docs/latest/)) : librairie JavaScript pour la gestion des graphiques 
 -   Video.js (voir la [documentation](https://docs.videojs.com/)) : librairie JavaScript pour la gestion des vidéos 
