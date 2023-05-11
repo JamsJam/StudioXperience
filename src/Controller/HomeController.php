@@ -15,9 +15,9 @@ class HomeController extends AbstractController
     public function index(FormatRepository $formatRepo, CategorieRepository $categorieRepo, PostRepository $postRepo): Response
     {
         // $postTitre = $postRepo->findBy(
-            
+ 
         // );
-
+        //     $postRepo->
         return $this->render('home/index.html.twig', [
             'controller_name' => 'HomeController',
         ]);
