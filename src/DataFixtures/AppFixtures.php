@@ -2,19 +2,24 @@
 
 namespace App\DataFixtures;
 
+use Faker\Factory;
+use App\Entity\Post;
 use App\Repository\PostRepository;
-use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
+use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class AppFixtures extends Fixture
+class PostFixture extends Fixture
 {
-    public function load(ObjectManager $manager, PostRepository $PostRepo): void
+    public function load(ObjectManager $manager): void
     {
 
+        require_once 'vendor/autoload.php';
 
-        // for ($i = 0; $i < 20; i < 20)
-        // $post = new PostRepo();
-        // $manager->persist($product);
+        // use the factory to create a Faker\Generator instance
+        $faker = Factory::create();
+        $post = new Post();
+        // $post->setPublishAt($faker->dateTime());
+
 
         $manager->flush();
     }
