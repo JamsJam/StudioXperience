@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PostRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,18 @@ class Post
 
     #[ORM\Column]
     private ?\DateTimeImmutable $publishAt = null;
+
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Format $format = null;
+
+    #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'posts')]
+    private Collection $categorie;
+
+    public function __construct()
+    {
+        $this->categorie = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -120,6 +134,42 @@ class Post
     public function setPublishAt(\DateTimeImmutable $publishAt): self
     {
         $this->publishAt = $publishAt;
+
+        return $this;
+    }
+
+    public function getFormat(): ?Format
+    {
+        return $this->format;
+    }
+
+    public function setFormat(?Format $format): self
+    {
+        $this->format = $format;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categorie>
+     */
+    public function getCategorie(): Collection
+    {
+        return $this->categorie;
+    }
+
+    public function addCategorie(Categorie $categorie): self
+    {
+        if (!$this->categorie->contains($categorie)) {
+            $this->categorie->add($categorie);
+        }
+
+        return $this;
+    }
+
+    public function removeCategorie(Categorie $categorie): self
+    {
+        $this->categorie->removeElement($categorie);
 
         return $this;
     }
