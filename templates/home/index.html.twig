@@ -11,7 +11,6 @@
   justify-content : center;
   align-items : center;
   gap : 10px;
-  margin : 15px;
 
  }
  .article{
@@ -20,9 +19,16 @@
   border : 1px solid black;
  }
 
- h5{
-  text-align: center;
+
+ .author{
+    position: relative;
+    top: 5px;
+    left : 15px;
  }
+ .titre{
+  text-align : center
+ }
+
 
  .post{
   display:flex;
@@ -43,7 +49,8 @@
     <!-- Slides -->
     <div class="swiper-slide">
        <div class="article">
-            <h5> Auteur </h5>
+            <p class="author">Auteur</p>
+            <h5 class="titre">Titre</h5>
             <div class="post">
               <p>
               lorem ipsum lorem ipsum
@@ -86,10 +93,6 @@
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 
-  <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
-
   <!-- If we need scrollbar -->
   <div class="swiper-scrollbar"></div>
 </div>
@@ -104,18 +107,26 @@ const swiper = new Swiper('.swiper', {
     el: '.swiper-pagination',
   },
 
-  // Navigation arrows
-  navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  },
-
   // And if we need scrollbar
   scrollbar: {
     el: '.swiper-scrollbar',
   },
+  //grab icon for cursor
+  grabCursor : true,
+  
+  //Distance between slides (px)
+  spaceBetween : 20,
 
+  loop: true,
+
+  autoplay: {
+    delay : 2000,
+    disableOnInteraction : false,
+    pauseOnMouseEnter: true,
+  }
+  
 });
+
 </script>
 
 {% endblock %}
