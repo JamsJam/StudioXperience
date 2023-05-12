@@ -54,13 +54,19 @@ class PostType extends AbstractType
             //! Utilisera un module WYSIWYG pour l'éditeur de texte via TinyMCE
             ->add('corps',TinymceType::class, [
                 "attr" => [
-                    "toolbar" => "bold italic underline | bullist numlist",
-                ],
-                "row_attr"=> [
-                    "class" => "tinymce",
-                    "id" => "post_content",
+                    "toolbar" => "toolbar: ' undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | image | emoticons ' ",
+                    "plugins" => "plugins: '[
+                        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
+                        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
+                        'table emoticons template paste help ]' ",
+                    " memubar " => " menubar: ' file edit view insert format tools table help '  ",
+                    ],
+                    "row_attr" => [
+                        "class" => "tinymce",
+                        "id" => "post_content",
                     ]
-            ])
+            ])  
+           
             ->add('description',TextType::class,[
                 'label' => 'Description',
                 'attr' => [
