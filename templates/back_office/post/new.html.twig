@@ -9,3 +9,13 @@
 
     <a href="{{ path('app_back_office_post_index') }}">back to list</a>
 {% endblock %}
+{% block script %}
+    <script>
+        tinymce.init({
+            selector: '#post_content',
+            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak',
+            toolbar_mode: 'floating',
+            
+        })
+    </script>
+{% endblock %}

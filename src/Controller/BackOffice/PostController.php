@@ -29,6 +29,9 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            //! DD de la valeur retour de TinyMCE pour le corps du post
+            dd($post->getCorps());
             $postRepository->save($post, true);
 
             return $this->redirectToRoute('app_back_office_post_index', [], Response::HTTP_SEE_OTHER);

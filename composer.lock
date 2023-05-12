@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "d73e20cb44851cf705363c1302cd3da3",
+    "content-hash": "fff6e49f4e35a0376fc196736e551026",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1390,6 +1390,52 @@
                 "source": "https://github.com/doctrine/sql-formatter/tree/1.1.3"
             },
             "time": "2022-05-23T21:33:49+00:00"
+        },
+        {
+            "name": "eckinox/tinymce-bundle",
+            "version": "v0.1.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/eckinox/tinymce-bundle.git",
+                "reference": "85efd8e09e30277c7e3f1e400c4a547292eafb9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/eckinox/tinymce-bundle/zipball/85efd8e09e30277c7e3f1e400c4a547292eafb9b",
+                "reference": "85efd8e09e30277c7e3f1e400c4a547292eafb9b",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^8.0",
+                "symfony/dependency-injection": "^4.0|^5.0|^6.0",
+                "symfony/form": "^4.0|^5.0|^6.0",
+                "symfony/http-foundation": "^4.0|^5.0|^6.0",
+                "symfony/http-kernel": "^4.0|^5.0|^6.0",
+                "symfony/routing": "^4.0|^5.0|^6.0",
+                "twig/twig": "^3.3"
+            },
+            "require-dev": {
+                "eckinox/eckinox-cs": ">=1.2.1"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Eckinox\\TinymceBundle\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "authors": [
+                {
+                    "name": "Émile Perron",
+                    "email": "contact@emileperron.com"
+                }
+            ],
+            "description": "A Symfony bundle to add TinyMCE in your apps and forms.",
+            "support": {
+                "issues": "https://github.com/eckinox/tinymce-bundle/issues",
+                "source": "https://github.com/eckinox/tinymce-bundle/tree/v0.1.5"
+            },
+            "time": "2022-05-11T19:17:31+00:00"
         },
         {
             "name": "egulias/email-validator",
@@ -7739,6 +7785,65 @@
                 "source": "https://github.com/tattali/CalendarBundle/tree/v1.2.3"
             },
             "time": "2022-01-25T16:55:38+00:00"
+        },
+        {
+            "name": "tinymce/tinymce",
+            "version": "6.4.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tinymce/tinymce-dist.git",
+                "reference": "6a37da4822eebcd2706793454b07bd891c5277a8"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tinymce/tinymce-dist/zipball/6a37da4822eebcd2706793454b07bd891c5277a8",
+                "reference": "6a37da4822eebcd2706793454b07bd891c5277a8",
+                "shasum": ""
+            },
+            "type": "component",
+            "extra": {
+                "component": {
+                    "scripts": [
+                        "tinymce.js",
+                        "plugins/*/plugin.js",
+                        "themes/*/theme.js",
+                        "models/*/model.js",
+                        "icons/*/icons.js"
+                    ],
+                    "files": [
+                        "tinymce.min.js",
+                        "plugins/*/plugin.min.js",
+                        "themes/*/theme.min.js",
+                        "models/*/model.min.js",
+                        "skins/**",
+                        "icons/*/icons.min.js"
+                    ]
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT-only"
+            ],
+            "description": "Web based JavaScript HTML WYSIWYG editor control.",
+            "homepage": "https://www.tiny.cloud/",
+            "keywords": [
+                "contenteditable",
+                "editing",
+                "html",
+                "javascript",
+                "rich editor",
+                "rich text",
+                "rich text editor",
+                "richtext",
+                "rte",
+                "text",
+                "tinymce",
+                "wysiwyg"
+            ],
+            "support": {
+                "source": "https://github.com/tinymce/tinymce-dist/tree/6.4.2"
+            },
+            "time": "2023-04-26T10:48:15+00:00"
         },
         {
             "name": "twig/extra-bundle",

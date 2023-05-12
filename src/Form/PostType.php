@@ -3,17 +3,17 @@
 namespace App\Form;
 
 use App\Entity\Post;
-use DateTimeImmutable;
-use Doctrine\DBAL\Types\BooleanType;
+use App\Entity\Format;
+use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
-use phpDocumentor\Reflection\Types\Boolean;
+
 use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\RadioType;
-use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 
 class PostType extends AbstractType
@@ -21,17 +21,32 @@ class PostType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('pricing',RadioType::class,[
+            ->add('pricing',ChoiceType::class,[
                 'label' => 'payant',
                 'attr' => [
                     'placeholder' => 'payant'
-                ]
+                
+                    ],
+                "expanded" => true,
+                "multiple" => false,
+                'choices' => [
+                    'oui' => true,
+                    'non' => false
+                ],
+                'required' => false,
             ])
-            ->add('share',RadioType::class,[
+            ->add('share',ChoiceType::class,[
                 'label' => 'Partage',
                 'attr' => [
                     'placeholder' => 'Partage'
-                ]
+                ],
+                "expanded" => true,
+                "multiple" => false,
+                'choices' => [
+                    'oui' => true,
+                    'non' => false
+                ],
+                'required' => false,
             ])
             ->add('titre',TextType::class,[
                 "label" => "Titre",
@@ -41,6 +56,10 @@ class PostType extends AbstractType
                 "attr" => [
                     "toolbar" => "bold italic underline | bullist numlist",
                 ],
+                "row_attr"=> [
+                    "class" => "tinymce",
+                    "id" => "post_content",
+                    ]
             ])
             ->add('description',TextType::class,[
                 'label' => 'Description',
@@ -54,28 +73,30 @@ class PostType extends AbstractType
                     'placeholder' => 'Mots clés'
                 ]
             ])
-            ->add('publishAt',DateTimeImmutable::class,[
+            ->add('publishAt',DateTimeType::class,[
                 'widget' => 'single_text',
                 'label' => 'Date de publication',
                 'attr' => [
                     'placeholder' => 'Date de publication'
-                ]
+                ],
+                'mapped' => false,
             ])
             ->add('format',EntityType::class,[
-                'class' => 'App\Entity\Format',
+                'class' => Format::class,
                 'choice_label' => 'nom',
                 'label' => 'Format',
                 'attr' => [
                     'placeholder' => 'Format'
-                ]
+                ],
+                'multiple' => false,  // Permet de sélectionner plusieurs catégories
+                'expanded' => true,  // Affiche les options comme des radios
             ])
             ->add('categorie',EntityType::class,[
-                'class' => 'App\Entity\Categorie',
+                'class' => Categorie::class,
                 'choice_label' => 'nom',
-                'label' => 'Catégorie',
-                'attr' => [
-                    'placeholder' => 'Catégorie'
-                ]
+                'multiple' => true,  // Permet de sélectionner plusieurs catégories
+                'expanded' => true,  // Affiche les options comme des checkboxes
+                
             ])
         ;
     }
