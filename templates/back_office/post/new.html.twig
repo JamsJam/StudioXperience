@@ -10,13 +10,16 @@
     <a href="{{ path('app_back_office_post_index') }}">back to list</a>
 {% endblock %}
 {% block script %}
-    <script>
-        tinymce.init({
-            selector: '#post_content',
-            plugins: 'advlist autolink lists link image charmap print preview hr anchor pagebreak ',
-            toolbar: 'emoticons'
-            toolbar_mode: 'floating',
-            
-        })
+        <script>
+        document.addEventListener('DOMContentLoaded', function() {
+             tinymce.init({
+                selector: '#{{ form.corps.vars.id }}',
+                height: 1000,
+                plugins: 'advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker',
+                toolbar: 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
+                image_title: true,
+                menubar: 'file edit view insert format tools help',
+    });
+        });
     </script>
 {% endblock %}

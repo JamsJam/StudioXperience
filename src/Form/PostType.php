@@ -14,6 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 
 class PostType extends AbstractType
@@ -52,19 +53,19 @@ class PostType extends AbstractType
                 "label" => "Titre",
             ])
             //! Utilisera un module WYSIWYG pour l'éditeur de texte via TinyMCE
-            ->add('corps',TinymceType::class, [
-                "attr" => [
-                    "toolbar" => "toolbar: ' undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | outdent indent | image | emoticons ' ",
-                    "plugins" => "plugins: '[
-                        'advlist autolink link image lists charmap print preview hr anchor pagebreak',
-                        'searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking',
-                        'table emoticons template paste help ]' ",
-                    " memubar " => " menubar: ' file edit view insert format tools table help '  ",
-                    ],
-                    "row_attr" => [
-                        "class" => "tinymce",
-                        "id" => "post_content",
-                    ]
+            ->add('corps',TextareaType::class, [
+                "required" => false,
+                // "attr" => [
+                //             "plugins" =>  
+                //                 'advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker '
+                //             ,
+
+                //             "toolbar"=> 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
+                            
+                //             "image_title"=>true,
+                            
+                //             "menubar"=>"file edit view insert format tools help",
+                //     ]
             ])  
            
             ->add('description',TextType::class,[

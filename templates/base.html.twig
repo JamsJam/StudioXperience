@@ -7,8 +7,7 @@
         
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
 
-
-        {# // <script src=".\vendor\tinymce\tinymce\tinymce.min.js" referrerpolicy="origin"></script> #}
+        <script src="{{asset('./bundles/tinymce/ext/tinymce/tinymce.min.js')}}" defer=""></script>
     </head>
     <body>
         {% block body %}{% endblock %}
