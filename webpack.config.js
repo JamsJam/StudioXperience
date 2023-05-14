@@ -70,7 +70,11 @@ Encore
     //.enableIntegrityHashes(Encore.isProduction())
 
     // uncomment if you're having problems with a jQuery plugin
-    //.autoProvidejQuery()
+    // .autoProvidejQuery()
+
+    
+    //! add for tinyMCE editor 
+    .addEntry('tinyMCE', './assets/js/tinymce.min.js')
 ;
 
 module.exports = Encore.getWebpackConfig();
