@@ -9,7 +9,7 @@ use DateTimeImmutable;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 
-class PostFixture extends Fixture
+class AppFixtures extends Fixture
 {
     public function load(ObjectManager $manager): void
     {
