@@ -14,11 +14,10 @@ class HomeController extends AbstractController
     #[Route('/home', name: 'app_home')]
     public function index(FormatRepository $formatRepo, CategorieRepository $categorieRepo, PostRepository $postRepo): Response
     {
-        // $postTitre = $postRepo->findBy(
- 
-        // );
-        //     $postRepo->
+        $latestPost = $postRepo->findBy([],["id" => "DESC"], 20);
+
         return $this->render('home/index.html.twig', [
+            'latest_post' => $latestPost,
             'controller_name' => 'HomeController',
         ]);
     }
