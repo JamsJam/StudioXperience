@@ -3,130 +3,69 @@
 {% block title %}Hello HomeController!{% endblock %}
 
 {% block body %}
+
 <style>
- .swiper-slide{
-  height: 200px;
-  width: 300px;
-  display : flex;
-  justify-content : center;
-  align-items : center;
-  gap : 10px;
-
- }
- .article{
-  background-color : grey;
-  border-radius : 15px;
-  border : 1px solid black;
- }
-
-
- .author{
-    position: relative;
-    top: 5px;
-    left : 15px;
- }
- .titre{
-  text-align : center
- }
-
-
- .post{
-  display:flex;
-  justify-content: center;
-  align-items:center
- }
-
-
+.swiper {
+  width: 600px;
+  height: 300px;
+}
 </style>
-
-
 
 <!-- Slider main container -->
 <div class="swiper">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
-
     <!-- Slides -->
-    <div class="swiper-slide">
-       <div class="article">
-            <p class="author">Auteur</p>
-            <h5 class="titre">Titre</h5>
-            <div class="post">
-              <p>
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum...
-              </p>
-            </div>
-        </div>
-
-         <div class="article">
-            <h5> Auteur </h5>
-            <div class="post">
-              <p>
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum...
-              </p>
-            </div>
-        </div>
-
-         <div class="article">
-            <h5> Auteur </h5>
-            <div class="post">
-              <p>
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum
-              lorem ipsum lorem ipsum...
-              </p>
-            </div>
-        </div>
-    </div>
-    <div class="swiper-slide">
-        
-    </div>
-    <div class="swiper-slide">
-        
-    </div>
-
+    <div class="swiper-slide">Slide 1</div>
+    <div class="swiper-slide">Slide 2</div>
+    <div class="swiper-slide">Slide 3</div>
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
+
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
 
   <!-- If we need scrollbar -->
   <div class="swiper-scrollbar"></div>
 </div>
 
+
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 
 <script>
+
 const swiper = new Swiper('.swiper', {
+  // Optional parameters
+  direction: 'vertical',
+  loop: true,
 
   // If we need pagination
   pagination: {
     el: '.swiper-pagination',
   },
 
+  // Navigation arrows
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev',
+  },
+
   // And if we need scrollbar
   scrollbar: {
     el: '.swiper-scrollbar',
   },
-  //grab icon for cursor
-  grabCursor : true,
-  
-  //Distance between slides (px)
-  spaceBetween : 20,
+});
+</script>
 
-  loop: true,
 
-  autoplay: {
+
+{% endblock %}
+
+  {# autoplay: {
     delay : 2000,
     disableOnInteraction : false,
     pauseOnMouseEnter: true,
   }
-  
-});
-
-</script>
-
-{% endblock %}
+   #}
