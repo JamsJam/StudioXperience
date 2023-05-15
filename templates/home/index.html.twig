@@ -6,39 +6,65 @@
 
 <style>
 .swiper {
-  width: 600px;
+  width: 100vw;
   height: 300px;
+  background-color : black;
+}
+
+.swiper-slide{
+  background-color : blue;
+  display : flex;
+  flex-direction : column;
+  justify-content: center;
+  align-items: center;
+  gap : 0.5vw;
+}
+
+.swiper-slide>h5{
+  font-size: 20px;
+  text-align: center;
+  margin-block : 10px;
+}
+
+.swiper-slide>p{
+  margin-inline : 5px;
+  margin-block : 0;
 }
 </style>
 
 <!-- Slider main container -->
+{%if latest_post | length >= 20 %}
 <div class="swiper">
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
-    <div class="swiper-slide">Slide 1</div>
-    <div class="swiper-slide">Slide 2</div>
-    <div class="swiper-slide">Slide 3</div>
+  {% for post in latest_post %}
+    <div class="swiper-slide">
+      <h5>{{post.titre}}</h5>
+      <p>{{post.description}}</p>
+    </div>
+  {% endfor %}
+
   </div>
   <!-- If we need pagination -->
   <div class="swiper-pagination"></div>
 
   <!-- If we need navigation buttons -->
-  <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div>
+  {# <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div> #}
 
   <!-- If we need scrollbar -->
   <div class="swiper-scrollbar"></div>
 </div>
-
+{% else %}
+{% endif %}
 
 <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-
 <script>
 
 const swiper = new Swiper('.swiper', {
   // Optional parameters
-  direction: 'vertical',
+  direction: 'horizontal',
   loop: true,
 
   // If we need pagination
@@ -47,25 +73,26 @@ const swiper = new Swiper('.swiper', {
   },
 
   // Navigation arrows
-  navigation: {
+  {# navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev',
-  },
+  }, #}
 
   // And if we need scrollbar
   scrollbar: {
     el: '.swiper-scrollbar',
   },
-});
-</script>
+   spaceBetween: 25,
+   slidesPerView : 5,
+   slidesPerGroup : 5,
 
-
-
-{% endblock %}
-
-  {# autoplay: {
+  autoplay: {
     delay : 2000,
     disableOnInteraction : false,
     pauseOnMouseEnter: true,
   }
-   #}
+});
+
+</script>
+
+{% endblock %}
