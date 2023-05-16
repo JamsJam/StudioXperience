@@ -59,8 +59,8 @@ class CalendrierSubscriber implements EventSubscriberInterface
         $filters = $calendar->getFilters();
 
         // Modify the query to fit to your entity and needs
-        // Change booking.beginAt by your start date property
-        $bookings = $this->CalendrierRepo
+        // Change post.beginAt by your start date property
+        $posts = $this->CalendrierRepo
             ->createQueryBuilder('booking')
             ->where('booking.beginAt BETWEEN :start and :end OR booking.endAt BETWEEN :start and :end')
             ->setParameter('start', $start->format('Y-m-d H:i:s'))
@@ -69,12 +69,14 @@ class CalendrierSubscriber implements EventSubscriberInterface
             ->getResult()
         ;
 
-        foreach ($bookings as $booking) {
-            // this create the events with your data (here booking data) to fill calendar
-            $bookingEvent = new Event(
-                $booking->getTitle(),
-                $booking->getBeginAt(),
-                $booking->getEndAt() // If the end date is null or not defined, a all day event is created.
+        foreach ($posts as $post) {
+            // this create the events with your data (here post data) to fill calendar
+            $postEvent = new Event(
+                $post->getTitle(),
+                $post->getBeginAt(),
+                $post->getEndAt() // If the end date is null or not defined, a all day event is created.
+                // $ressource(id) ?
+                // $options(array) ?
             );
 
             /*
@@ -84,19 +86,19 @@ class CalendrierSubscriber implements EventSubscriberInterface
              * and: https://github.com/fullcalendar/fullcalendar/blob/master/src/core/options.ts
              */
 
-            $bookingEvent->setOptions([
+            $postEvent->setOptions([
                 'backgroundColor' => 'red',
                 'borderColor' => 'red',
             ]);
-            $bookingEvent->addOption(
+            $postEvent->addOption(
                 'url',
-                $this->url->generate('app_booking_show', [
-                    'id' => $booking->getId(),
+                $this->url->generate('app_calendrier_show', [
+                    'id' => $post->getId(),
                 ])
             );
 
             // finally, add the event to the CalendarEvent to fill the calendar
-            $calendar->addEvent($bookingEvent);
+            $calendar->addEvent($postEvent);
         }
     }
 }
