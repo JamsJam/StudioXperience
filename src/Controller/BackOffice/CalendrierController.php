@@ -11,21 +11,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 
-// class CalendrierController extends AbstractController
-// {
-//     #[Route('/back/office/calendrier', name: 'app_back_office_calendrier')]
-//     public function index(): Response
-//     {
-//         return $this->render('back_office/calendrier/index.html.twig', [
-//             'controller_name' => 'CalendrierController',
-//         ]);
-//     }
-// }
-
 #[Route('back/office/calendrier')]
 class CalendrierController extends AbstractController
 {
 
+    //Code tiré de la doc FullCalendar symfony integration pour afficher le calendrier
+    
     /**
      * @Route("/", name="app_booking_calendar", methods={"GET"})
      */

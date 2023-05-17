@@ -5,10 +5,13 @@ namespace App\Controller\BackOffice;
 use App\Entity\Post;
 use App\Form\PostType;
 use App\Repository\PostRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizer;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerConfig;
+use Symfony\Component\HtmlSanitizer\HtmlSanitizerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/back/office/post')]
 class PostController extends AbstractController
@@ -16,13 +19,14 @@ class PostController extends AbstractController
     #[Route('/', name: 'app_back_office_post_index', methods: ['GET'])]
     public function index(PostRepository $postRepository): Response
     {
+
         return $this->render('back_office/post/index.html.twig', [
             'posts' => $postRepository->findAll(),
         ]);
     }
 
     #[Route('/new', name: 'app_back_office_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PostRepository $postRepository): Response
+    public function new(Request $request, PostRepository $postRepository, HtmlSanitizerInterface $htmlSanitizer): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
@@ -30,8 +34,11 @@ class PostController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             
-            //! DD de la valeur retour de TinyMCE pour le corps du post
-            dd($post->getCorps());
+            //! DD de la valeur retour de TinyMCE pour le corps du post (pour voir les balises HTML) 
+            dd($post->getCorps(), $htmlSanitizer->sanitize($post->getCorps()));
+
+            $post->setCorps($htmlSanitizer->sanitizeFor("textarea",$post->getCorps()));
+            
             $postRepository->save($post, true);
 
             return $this->redirectToRoute('app_back_office_post_index', [], Response::HTTP_SEE_OTHER);
