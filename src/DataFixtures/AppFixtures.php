@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Categorie;
 use App\Entity\Format;
+use App\Entity\Calendrier;
 use Faker\Factory;
 use App\Entity\Post;
 use App\Repository\FormatRepository;
@@ -14,14 +15,21 @@ use Doctrine\ORM\EntityManager;
 
 class AppFixtures extends Fixture
 {
+//?------ injections de données factices dans la BDD avec faker php ------//
 
     public function load(ObjectManager $manager): void
     {
 
-        // require_once 'vendor/autoload.php';
-
         // use the factory to create a Faker\Generator instance
         $faker = Factory::create();
+
+        for ($i=0; $i < 10; $i++) {  
+            $calendrier = new Calendrier;
+            $calendrier->setBeginAt(DateTimeImmutable::createFromMutable($faker->dateTime()));
+            $calendrier->setEndAt(DateTimeImmutable::createFromMutable($faker->dateTime()));
+            $calendrier->setTitle($faker->word(3,true));
+            $manager->persist($calendrier);
+        }
 
         for ($i=0; $i < 10; $i++) {  
             $categorie = new Categorie;

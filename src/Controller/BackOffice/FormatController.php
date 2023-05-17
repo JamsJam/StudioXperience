@@ -34,7 +34,7 @@ class FormatController extends AbstractController
             return $this->redirectToRoute('app_back_office_format_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back_office/format/new.html.twig', [
+        return $this->render('back_office/format/new.html.twig', [
             'format' => $format,
             'form' => $form,
         ]);
@@ -60,7 +60,7 @@ class FormatController extends AbstractController
             return $this->redirectToRoute('app_back_office_format_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back_office/format/edit.html.twig', [
+        return $this->render('back_office/format/edit.html.twig', [
             'format' => $format,
             'form' => $form,
         ]);
