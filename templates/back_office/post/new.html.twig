@@ -1,5 +1,12 @@
 {% extends 'base.html.twig' %}
+{#
+    todo ---------------------------------------------------------------------------------------------------------
+    todo  ----------------------------  Page de creation de post  -----------------------------------------------
+    todo ---------------------------------------------------------------------------------------------------------
 
+    ! Factoriser le code de la page de creation de post avec la page d'edition de post
+
+#}
 {% block title %}New Post{% endblock %}
 
 {% block body %}
@@ -8,6 +15,8 @@
     {{ include('back_office/post/_form.html.twig') }}
 
     <a href="{{ path('app_back_office_post_index') }}">back to list</a>
+
+
 {% endblock %}
 {% block script %}
         <script>
@@ -16,18 +25,46 @@
         {#
             todo ---------  Isoler le code suivant dans un fichier js dedier a mimifier dans assets  ---------   
         #}
+
+        const getPicture = async (blobInfo, success, failure) => {
+            const formData = new FormData();
+            formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+            try {
+                const response = await fetch('/upload', { {#  replace '/upload' with your Symfony route #}
+                    method: 'POST',
+                    body: formData
+                });
+
+                if (response.ok) {
+                    const json = await response.json();
+                    if (json && typeof json.location === 'string') {
+                        success(json.location);
+                    } else {
+                        failure('Invalid JSON: ' + JSON.stringify(json));
+                    }
+                } else {
+                    failure('HTTP Error: ' + response.status);
+                }
+            } catch (error) {
+                failure('Fetch error: ' + error.message);
+            }
+        }
         // # eduteur de texte poste/creer
             tinymce.init({
                 selector: '#{{ form.corps.vars.id }}',
-                height: 1000,
-                plugins: 'advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker',
+                height: 600,
+                plugins: 'lists advlist autolink link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker',
                 toolbar: 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
                 image_title: true,
+                a11y_advanced_options: true,
                 menubar: 'file edit view insert format tools help',
             });
         });
         {#
             todo ---------------------------------------------------------------------------------------------------------   
         #}
+
+        
     </script>
 {% endblock %}
