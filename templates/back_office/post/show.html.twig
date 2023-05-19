@@ -3,90 +3,63 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
-    {# <h1>Post</h1>
-
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ post.id }}</td>
-            </tr>
-            <tr>
-                <th>Pricing</th>
-                <td>{{ post.pricing ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Share</th>
-                <td>{{ post.share ? 'Yes' : 'No' }}</td>
-            </tr>
-            <tr>
-                <th>Titre</th>
-                <td>{{ post.titre }}</td>
-            </tr>
-            <tr>
-                <th>Corps</th>
-                <td>{{ post.corps }}</td>
-            </tr>
-            <tr>
-                <th>Description</th>
-                <td>{{ post.description }}</td>
-            </tr>
-            <tr>
-                <th>Keywords</th>
-                <td>{{ post.keywords }}</td>
-            </tr>
-            <tr>
-                <th>PublishAt</th>
-                <td>{{ post.publishAt ? post.publishAt|date('Y-m-d H:i:s') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
-
-    <a href="{{ path('app_back_office_post_index') }}">back to list</a>
-
-    <a href="{{ path('app_back_office_post_edit', {'id': post.id}) }}">edit</a>
-
-    {{ include('back_office/post/_delete_form.html.twig') }} #}
+ {% if post %}{% endif %}
     <h1> Affichage test</h1>
-    
+
+    {% if post.format == "article" %}
+        <h2> block article</h2>
+        {{ post.content|raw }}
+    {% endif %} 
+
 {#? Si le poste est un podcast  #}
-<h2> block audio</h2>
-    <div id="play" style="width:100px;height:100px;background:navy"></div>
-    <div id="siri-container"></div>
+    {% if post.format == "audio" %}
+        <h2> block audio</h2>
+            <div id="play" style="width:100px;height:100px;background:navy"></div>
+            <div id="siri-container"></div>
+
+    {% endif %} 
 
 {#? Si le post est une video  #}
-<h2> block video</h2>
-    <video
-        id="my-video"
-        class="video-js"
-        controls
-        preload="auto"
-        width="640"
-        height="264"
-        {# poster="MY_VIDEO_POSTER.jpg" #}
-        data-setup="{}"
-        >
-        <source src="{{asset('./Videos/Animation-liste-Noir.mp4')}}" type="video/mp4" />
-        {# <source src="MY_VIDEO.webm" type="video/webm" /> #}
-        <p class="vjs-no-js">
-            To view this video please enable JavaScript, and consider upgrading to aweb browser that
 
-            <a href="https://videojs.com/html5-video-support/" target="_blank">
-                supports HTML5 video
-            </a>
-        </p>
-    </video>
+    {% if post.format == "video" %}
+        <h2> block video</h2>
+        <video
+            id="my-video"
+            class="video-js"
+            controls
+            preload="auto"
+            width="640"
+            height="264"
+            {# poster="MY_VIDEO_POSTER.jpg" #}
+            data-setup="{}"
+            >
+            <source src="{{asset('./Videos/Animation-liste-Noir.mp4')}}" type="video/mp4" />
+            <source src="MY_VIDEO.webm" type="video/webm" />
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to aweb browser that
+
+                <a href="https://videojs.com/html5-video-support/" target="_blank">
+                    supports HTML5 video
+                </a>
+            </p>
+        </video>
+
+    {% endif %} 
 
 
 {% endblock %}
     {% block script %}
+
     <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
     <script src="{{asset("./js/howler.core.js")}}"></script>        
+       
     <script>
+
 
         document.addEventListener('DOMContentLoaded', function() {
             let state = false;
+
             const siriWave = new SiriWave({
                 container: document.getElementById("siri-container"),
                 width: 640,
@@ -94,6 +67,7 @@
                 color: "#000",
             });
             siriWave.stop();
+                
             
             const sound = new Howl({
                 src: ['{{ asset("/sound/minamo.mp3") }}'],
@@ -119,5 +93,5 @@
     </script>
             
 {% endblock %}
-{% endblock %}
+
 
