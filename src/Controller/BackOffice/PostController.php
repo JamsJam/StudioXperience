@@ -2,8 +2,11 @@
 
 namespace App\Controller\BackOffice;
 
+use App\Entity\Calendrier;
 use App\Entity\Post;
 use App\Form\PostType;
+use App\Repository\CalendrierRepository;
+use DateTimeImmutable;
 use App\Repository\PostRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,25 +29,35 @@ class PostController extends AbstractController
     }
 
     #[Route('/new', name: 'app_back_office_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PostRepository $postRepository, HtmlSanitizerInterface $htmlSanitizer): Response
+    public function new(Request $request, PostRepository $postRepository, HtmlSanitizerInterface $htmlSanitizer, CalendrierRepository $cr): Response
     {
         $post = new Post();
         $form = $this->createForm(PostType::class, $post);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            
-            //! DD de la valeur retour de TinyMCE pour le corps du post (pour voir les balises HTML) 
-            dd($post->getCorps(), $htmlSanitizer->sanitize($post->getCorps()));
+            // dd($request->query);
+            $calendar = new Calendrier;
+            $calendar 
+                ->setTitle($post->getTitre())
+                ->setBeginAt(DateTimeImmutable::createFromMutable($form->get('publishAt')->getData()))
+                ->setEndAt($calendar->getBeginAt());
+            // dd(DateTimeImmutable::createFromMutable($form->get('publishAt')->getData())) ;
+            $post->setPublishAt(DateTimeImmutable::createFromMutable($form->get('publishAt')->getData()));
+
+
+            // // ! DD de la valeur retour de TinyMCE pour le corps du post (pour voir les balises HTML) 
+            // dd($post->getCorps());
 
             $post->setCorps($htmlSanitizer->sanitizeFor("textarea",$post->getCorps()));
             
             $postRepository->save($post, true);
+            $cr->save($calendar,true);
 
             return $this->redirectToRoute('app_back_office_post_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('back_office/post/new.html.twig', [
+        return $this->render('back_office/post/new.html.twig', [
             'post' => $post,
             'form' => $form,
         ]);
