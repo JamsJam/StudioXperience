@@ -21,30 +21,27 @@
 
 {#? Si le post est une video  #}
 
-    {% if post.format == "video" %}
-        <h2> block video</h2>
-        <video
-            id="my-video"
-            class="video-js"
-            controls
-            preload="auto"
-            width="640"
-            height="264"
-            {# poster="MY_VIDEO_POSTER.jpg" #}
-            data-setup="{}"
-            >
-            <source src="{{asset('./Videos/Animation-liste-Noir.mp4')}}" type="video/mp4" />
-            <source src="MY_VIDEO.webm" type="video/webm" />
-            <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to aweb browser that
+<h2> block video</h2>
+    <video
+        id="my-video"
+        class="video-js"
+        controls
+        preload="auto"
+        width="640"
+        height="264"
+        {# poster="MY_VIDEO_POSTER.jpg" #}
+        data-setup="{}"
+        >
+        {# <source src="MY_VIDEO.webm" type="video/webm" /> #}
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to a web browser that
 
-                <a href="https://videojs.com/html5-video-support/" target="_blank">
-                    supports HTML5 video
-                </a>
-            </p>
-        </video>
+            <a href="https://videojs.com/html5-video-support/" target="_blank">
+                supports HTML5 video
+            </a>
+        </p>
+    </video>
 
-    {% endif %} 
 
 
 {% endblock %}
@@ -52,8 +49,24 @@
 
     <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
-    <script src="{{asset("./js/howler.core.js")}}"></script>        
-       
+
+    <script src="{{asset("./js/howler.core.js")}}"></script>
+    <script>
+        const player = videojs('my-video')
+           
+            player.src ({type : 'video/mp4',
+                        src : "{{asset('./Videos/animation_studio_Okai_AdobeExpress.mp4')}}" })
+    
+            player.on('ended',()=>{
+                player.src ({type : 'video/mp4',
+                            src : "{{asset('./Videos/Animation-liste-Noir.mp4')}}" })
+                player.ready(()=>{
+                    player.play()
+                })
+                })
+
+    </script>        
+
     <script>
 
 
@@ -92,6 +105,6 @@
         });
     </script>
             
-{% endblock %}
 
+{% endblock %}
 

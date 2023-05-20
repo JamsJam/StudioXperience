@@ -79,7 +79,11 @@
                 },
                 plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
                 timeZone: 'UTC',
+                {# dateClick : function(info) {
+                    info.dayEl.style.backgroundColor = 'red';
+                } #}
             });
+            calendar.setOption('locale','fr')
             calendar.render();
         });
     </script>

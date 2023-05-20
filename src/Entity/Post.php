@@ -44,9 +44,13 @@ class Post
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'posts')]
     private Collection $categorie;
 
+    #[ORM\OneToMany(mappedBy: 'fk_post', targetEntity: Media::class, orphanRemoval: true)]
+    private Collection $media;
+
     public function __construct()
     {
         $this->categorie = new ArrayCollection();
+        $this->media = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -170,6 +174,36 @@ class Post
     public function removeCategorie(Categorie $categorie): self
     {
         $this->categorie->removeElement($categorie);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Media>
+     */
+    public function getMedia(): Collection
+    {
+        return $this->media;
+    }
+
+    public function addMedium(Media $medium): self
+    {
+        if (!$this->media->contains($medium)) {
+            $this->media->add($medium);
+            $medium->setFkPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMedium(Media $medium): self
+    {
+        if ($this->media->removeElement($medium)) {
+            // set the owning side to null (unless already changed)
+            if ($medium->getFkPost() === $this) {
+                $medium->setFkPost(null);
+            }
+        }
 
         return $this;
     }
