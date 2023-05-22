@@ -7,6 +7,7 @@ use App\Entity\Format;
 use App\Entity\Categorie;
 use Symfony\Component\Form\AbstractType;
 
+use App\EventSubscriber\PostFormSubscriber;
 use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -16,9 +17,11 @@ use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 class PostType extends AbstractType
 {
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -66,7 +69,8 @@ class PostType extends AbstractType
                             
                 //             "menubar"=>"file edit view insert format tools help",
                 //     ]
-            ])  
+            ]) 
+            ->addEventSubscriber( new PostFormSubscriber()) 
            
             ->add('description',TextType::class,[
                 'label' => 'Description',

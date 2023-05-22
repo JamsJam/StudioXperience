@@ -21,6 +21,9 @@ Encore
      * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
+    //! add for tinyMCE editor 
+    .addEntry('tinyMCE', './assets/js/tinymce.min.js')
+    .addEntry('howler', './assets/js/howler.core.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -73,8 +76,7 @@ Encore
     // .autoProvidejQuery()
 
     
-    //! add for tinyMCE editor 
-    .addEntry('tinyMCE', './assets/js/tinymce.min.js')
+    
 ;
 
 module.exports = Encore.getWebpackConfig();
