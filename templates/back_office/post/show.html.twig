@@ -42,14 +42,11 @@
         </p>
     </video>
 
-
-
 {% endblock %}
     {% block script %}
 
     <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
-
     <script src="{{asset("./js/howler.core.js")}}"></script>
     <script>
         const player = videojs('my-video')
@@ -58,11 +55,13 @@
                         src : "{{asset('./Videos/animation_studio_Okai_AdobeExpress.mp4')}}" })
     
             player.on('ended',()=>{
+                console.log('ready')
                 player.src ({type : 'video/mp4',
                             src : "{{asset('./Videos/Animation-liste-Noir.mp4')}}" })
+
                 player.ready(()=>{
                     player.play()
-                })
+                    })
                 })
 
     </script>        
