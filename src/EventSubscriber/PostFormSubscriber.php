@@ -28,13 +28,13 @@ class PostFormSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            FormEvents::POST_SUBMIT => ['onFormSubmit', 10],
+            // FormEvents::POST_SUBMIT => ['onFormSubmit', 10],
             // FormEvents::PRE_SET_DATA => ['onPreSetData', 10],
             // KernelEvents::REQUEST => ['onKernelRequest', 10],
         ];
     }
     
-    public function onFormSubmit(FormEvent $event, RequestEvent $requestEvent): void
+    public function onFormSubmit(FormEvent $event): void
     {
         //  dd($event, "evenement SUBMIT déclenché");
 

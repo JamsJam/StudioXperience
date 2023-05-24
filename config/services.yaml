@@ -4,7 +4,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
-
+    article_video : '%kernel.project_dir%/public/uploads/article/video'
+    article_image : '%kernel.project_dir%/public/uploads/article/image'
+    article_audio : '%kernel.project_dir%/public/uploads/article/audio'
 services:
 
     _defaults:

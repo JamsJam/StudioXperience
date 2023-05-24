@@ -20,51 +20,158 @@
 {% endblock %}
 {% block script %}
         <script>
-          
+        
         document.addEventListener('DOMContentLoaded', function() {
+
         {#
-            todo ---------  Isoler le code suivant dans un fichier js dedier a mimifier dans assets  ---------   
+            ?===================================================================================================
+            * -------------------------------  Format Article ---------------------------------------------------
+            ?===================================================================================================
+        #}
+        {% if app.request.get('format') == 'Article' %}{
+
+            const getPicture = async (blobInfo, success, failure) => {
+                    const formData = new FormData();
+                    formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+                try {
+                        const response = await fetch('/upload', { {#  replace '/upload' with your Symfony route #}
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    if (response.ok) {
+                            const json = await response.json();
+                        if (json && typeof json.location === 'string') {
+                                success(json.location);
+                        } else {
+                                failure('Invalid JSON: ' + JSON.stringify(json));
+                        }
+                    } else {
+                            failure('HTTP Error: ' + response.status);
+                    }
+                } catch (error) {
+                        failure('Fetch error: ' + error.message);
+                }
+            }
+
+            // # eduteur de texte poste/creer
+            tinymce.init({
+                    selector: '#,
+                height: 600,
+                plugins: 'lists advlist autolink link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker',
+                toolbar: 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
+                // image_title: true,
+                // a11y_advanced_options: true,
+                menubar: 'file edit view insert format tools help',
+            });
+            }
+        {% endif %}
+        {#
+            ?===================================================================================================
         #}
 
-        // const getPicture = async (blobInfo, success, failure) => {
-        //     const formData = new FormData();
-        //     formData.append('file', blobInfo.blob(), blobInfo.filename());
 
-        //     try {
-        //         const response = await fetch('/upload', { {#  replace '/upload' with your Symfony route #}
-        //             method: 'POST',
-        //             body: formData
-        //         });
 
-        //         if (response.ok) {
-        //             const json = await response.json();
-        //             if (json && typeof json.location === 'string') {
-        //                 success(json.location);
-        //             } else {
-        //                 failure('Invalid JSON: ' + JSON.stringify(json));
-        //             }
-        //         } else {
-        //             failure('HTTP Error: ' + response.status);
-        //         }
-        //     } catch (error) {
-        //         failure('Fetch error: ' + error.message);
-        //     }
-        // }
-        // # eduteur de texte poste/creer
-        //     tinymce.init({
-        //         selector: '#,
-        //         height: 600,
-        //         plugins: 'lists advlist autolink link image charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker',
-        //         toolbar: 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
-        //         // image_title: true,
-        //         // a11y_advanced_options: true,
-        //         menubar: 'file edit view insert format tools help',
-        //     });
-        });
+
+        {#
+            ?===================================================================================================
+            * -------------------------------  Format Video ---------------------------------------------------
+            ?===================================================================================================
+        #}
+        {% if app.request.get('format') == 'Video' %}
+            let videoFormat = ['mp4','mov','avi']
+            const inputElement = document.querySelector('input[type="file"]');        
+            // Create a FilePond instance
+            // doc : https://pqina.nl/filepond/docs/
+            const pond = FilePond.create(inputElement)
+            let option = {
+                allowMultiple: true,
+                allowProcess: true,
+                // storeAsFile: true,
+                checkValidity: true,
+                
+                // stylePanelLayout: 'compact circle',
+                    }
+            FilePond.setOptions(option);
+            document.addEventListener('FilePond:addfile', (e) => {
+
+                console.log('FilePond ready for use', e.detail.file.fileExtension);
+
+                if (e.detail.file.fileExtension !== 'mp4') {
+                    e.detail.file.abortLoad();
+                    pond.labelIdle = 'Seul les videos au format .mp4 sont autorisées';
+                    setTimeout(() => {
+
+                        pond.labelIdle = 'Drag & Drop your files or <span class="filepond--label-action"> Browse </span>';
+                        
+                    }, 3000);
+                }
+
+                else{
+
+                }
+            });
+            
+
+        {% endif %}
+        {#
+            ?===================================================================================================
+        #}
+
+
+
+
+        {#
+            ?===================================================================================================
+            * -------------------------------  Format Audio ---------------------------------------------------
+            ?===================================================================================================
+
+        #}
+        {% if app.request.get('format') == 'Audio' %}
+            let audioFormat = ['mp3','wav','ogg', 'wma']
+            const inputElement = document.querySelector('input[type="file"]');        
+            // Create a FilePond instance
+            // doc : https://pqina.nl/filepond/docs/
+            const pond = FilePond.create(inputElement)
+            let option = {
+                allowProcess: true,
+                checkValidity: true,
+                
+                // stylePanelLayout: 'compact circle',
+                    }
+            FilePond.setOptions(option);
+            document.addEventListener('FilePond:addfile', (e) => {
+
+                console.log('FilePond ready for use', e.detail.file.fileExtension);
+
+                if (!audioFormat.includes(e.detail.file.fileExtension)) {
+                    console.log('FilePond ready for use', e.detail.file.fileExtension);
+                    e.detail.file.abortLoad();
+                    pond.labelIdle = 'Seul les format .mp3, .wav, .ogg, .wma sont autorisées';
+                    setTimeout(() => {
+                        pond.labelIdle = 'Drag & Drop your files or <span class="filepond--label-action"> Browse </span>';
+                    }, 3000);
+                }
+
+                else{
+
+                }
+            });
+            
+
+        {% endif %}
+        {#
+            ?===================================================================================================
+        #}
+
+
+
         {#
             todo ---------------------------------------------------------------------------------------------------------   
         #}
 
-        
+        });
+
     </script>
 {% endblock %}

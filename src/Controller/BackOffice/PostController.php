@@ -51,7 +51,18 @@ class PostController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($request->query);
+            $file = $form->get("video")->getData();
+            dump($form->get("video")->getData(),$file->getFileName());
+
+            $fileExt = $file->guessExtension();
+
+            // $fileName = $file->getFileName();
+
+            $fileName = $post->getTitre().".".$fileExt;
+
+            // $file->setFileName($fileName);
+            $file->move( $this->getParameter('article_video'), $fileName);
+            dd($post, $file->getFileName(),  $fileExt);
             $calendar = new Calendrier;
             $calendar 
                 ->setTitle($post->getTitre())
