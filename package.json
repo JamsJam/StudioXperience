@@ -25,6 +25,7 @@
     "dependencies": {
         "chart.js": "^4.3.0",
         "dayjs": "^1.11.7",
+        "filepond": "^4.30.4",
         "howler": "^2.2.3",
         "swiper": "^9.3.0",
         "tinymce": "^6.4.2"

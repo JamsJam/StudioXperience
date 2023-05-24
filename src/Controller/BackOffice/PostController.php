@@ -2,12 +2,13 @@
 
 namespace App\Controller\BackOffice;
 
-use App\Entity\Calendrier;
 use App\Entity\Post;
 use App\Form\PostType;
-use App\Repository\CalendrierRepository;
 use DateTimeImmutable;
+use App\Entity\Calendrier;
 use App\Repository\PostRepository;
+use App\Repository\FormatRepository;
+use App\Repository\CalendrierRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -29,14 +30,39 @@ class PostController extends AbstractController
     }
 
     #[Route('/new', name: 'app_back_office_post_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, PostRepository $postRepository, HtmlSanitizerInterface $htmlSanitizer, CalendrierRepository $cr): Response
+    public function new(Request $request, PostRepository $postRepository, HtmlSanitizerInterface $htmlSanitizer, CalendrierRepository $cr, FormatRepository $formatRepository): Response
     {
+        $formatArray = [];
+        $formats = $formatRepository->findAll();
+
+        foreach ($formats as $format) {
+            array_push($formatArray, $format->getNom());
+        }
+        //? redirect if format is not in the formatArray
+        if (!in_array($request->query->get('format'), $formatArray , true)) {
+            return $this->redirectToRoute('app_back_office_getformat');
+        } 
+            
+        $format = $request->query->get('format');
+        
+
         $post = new Post();
-        $form = $this->createForm(PostType::class, $post);
+        $form = $this->createForm(PostType::class, $post, ['format' => $format]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            // dd($request->query);
+            $file = $form->get("video")->getData();
+            dump($form->get("video")->getData(),$file->getFileName());
+
+            $fileExt = $file->guessExtension();
+
+            // $fileName = $file->getFileName();
+
+            $fileName = $post->getTitre().".".$fileExt;
+
+            // $file->setFileName($fileName);
+            $file->move( $this->getParameter('article_video'), $fileName);
+            dd($post, $file->getFileName(),  $fileExt);
             $calendar = new Calendrier;
             $calendar 
                 ->setTitle($post->getTitre())

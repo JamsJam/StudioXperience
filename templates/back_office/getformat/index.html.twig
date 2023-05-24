@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Choix du format{% endblock %}
+
+{% block body %}
+
+<style>
+    #grid{
+        display: grid;
+            grid-template-columns: repeat(auto-fill,minmax(300px, 1fr));
+    gap: 3rem;
+    place-items: center;
+    }
+    #grid div{
+        height: 250px;
+        width: 250px;
+        background-color : red;
+    }
+</style>
+<h1>Choix du format</h1>
+<div id="grid">
+    {#? Page permettan de choisir le format du nouveau post #}
+
+    {% for format in formats %}
+        
+        <a href="{{path("app_back_office_post_new", {'format': format.nom})}}">
+            <div>
+                {{ format.nom }}
+            </div>
+        </a>
+    {% endfor %}
+
+</div>
+{% endblock %}
