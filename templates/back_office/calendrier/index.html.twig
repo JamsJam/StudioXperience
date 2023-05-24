@@ -5,6 +5,24 @@
 {% block title %}Calendrier index{% endblock %}
 
 {% block body %}
+<style>
+.mouse-follow{
+    position: absolute;
+    transition : width 0.7s ease;
+}
+
+.mouse-follow-inactive{
+    width: 0px;
+    
+}
+.mouse-follow-active{
+    height: 100px;
+    width: 150px;
+    z-index: 1;
+    background-color : hsla(214, 100%, 50%, 1);
+}
+
+</style>
 
     <h1>Calendrier index</h1>
 
@@ -42,8 +60,13 @@
     <a href="{{ path('app_back_office_calendrier_new') }}">Create new Calendrier</a>
 
 {# ------------------Calendrier--------------- #}
-
     <div id="calendar-holder"></div>
+</div>
+
+<div class="mouse-follow">
+
+</div>
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/core@4.1.0/main.min.js"></script>
@@ -51,41 +74,74 @@
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.js"></script>
 
+
+
+
+
     <script type="text/javascript">
-        document.addEventListener('DOMContentLoaded', () => {
-            var calendarEl = document.getElementById('calendar-holder');
+
+    let mouseFollow = document.querySelector('.mouse-follow')
+    //quand MouseActive est faux mouseFollow s'affiche
+    let isMouseActive = true
+ 
+    function updateDisplay(event) {
+        //ajout du formulaire new ici
+    // let text = document.createElement = ("p")
+    // let link = document.createElement = ("a")
+
+    pageX = event.pageX;
+    pageY = event.pageY;
+    mouseFollow.style.top = `${pageY}px`
+    mouseFollow.style.left = `${pageX}px`
+    if(isMouseActive){
+    mouseFollow.classList.remove("mouse-follow-inactive")
+    mouseFollow.classList.add("mouse-follow-active")
+
+    isMouseActive = false
+    }else{
+    mouseFollow.classList.remove("mouse-follow-active")
+    mouseFollow.classList.add("mouse-follow-inactive")
+    isMouseActive = true
+    }
+    console.log(isMouseActive)
+    }
 
 
 
-            var calendar = new FullCalendar.Calendar(calendarEl, {
-                defaultView: 'dayGridMonth',
-                editable: true,
-                eventSources: [
-                    {
-                        url: "{{ path('fc_load_events') }}",
-                        method: "POST",
-                        extraParams: {
-                            filters: JSON.stringify({})
-                        },
-                        failure: () => {
-                            // alert("There was an error while fetching FullCalendar!");
-                        },
-                    },
-                ],
-                header: {
-                    left: 'prev,next today',
-                    center: 'title',
-                    right: 'dayGridMonth,timeGridWeek,timeGridDay',
+document.addEventListener('DOMContentLoaded', () => {
+    var calendarEl = document.getElementById('calendar-holder');
+    //quand je click mouseFollow se déplace à l'endroit de la souris
+    calendarEl.addEventListener('click',updateDisplay,false)
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        defaultView: 'dayGridMonth',
+        editable: true,
+        eventSources: [
+            {
+                url: "{{ path('fc_load_events') }}",
+                method: "POST",
+                extraParams: {
+                    filters: JSON.stringify({})
                 },
-                plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
-                timeZone: 'UTC',
-                {# dateClick : function(info) {
-                    info.dayEl.style.backgroundColor = 'red';
-                } #}
-            });
-            calendar.setOption('locale','fr')
-            calendar.render();
-        });
+                failure: () => {
+                    // alert("There was an error while fetching FullCalendar!");
+                },
+            },
+        ],
+        header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay',
+        },
+        plugins: [ 'interaction', 'dayGrid', 'timeGrid' ], // https://fullcalendar.io/docs/plugin-index
+        timeZone: 'UTC',
+        dateClick : function(info) {
+            //Permet de configurer un event au click d'une date
+        }
+    })
+calendar.setOption('locale','fr')
+calendar.render();
+});
     </script>
 
 {% endblock %}
