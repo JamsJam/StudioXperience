@@ -5,31 +5,31 @@
 {% block body %}
 
 <style>
-.swiper {
-  width: 99vw;
-  height: 300px;
-  background-color : black;
-}
+  .swiper {
+    width: 99vw;
+    height: 300px;
+    background-color : black;
+  }
 
-.swiper-slide{
-  background-color : blue;
-  display : flex;
-  flex-direction : column;
-  justify-content: center;
-  align-items: center;
-  gap : 0.5vw;
-}
+  .swiper-slide{
+    background-color : crimson;
+    display : flex;
+    flex-direction : column;
+    justify-content: center;
+    align-items: center;
+    gap : 0.5vw;
+  }
 
-.swiper-slide>h5{
-  font-size: 20px;
-  text-align: center;
-  margin-block : 10px;
-}
+  .swiper-slide>h5{
+    font-size: 20px;
+    text-align: center;
+    margin-block : 10px;
+  }
 
-.swiper-slide>p{
-  margin-inline : 5px;
-  margin-block : 0;
-}
+  .swiper-slide>p{
+    margin-inline : 5px;
+    margin-block : 0;
+  }
 </style>
 
 <!-- Slider main container -->
@@ -40,8 +40,9 @@
     <!-- Slides -->
   {% for post in latest_post %}
     <div class="swiper-slide">
-      <h5>{{post.titre}}</h5>
+      <h5>{{post.titre|trans}}</h5>
       <p>{{post.description}}</p>
+        <a href="{{path('app_front_post_show', {'slug': post.slug})}}">Voir plus</a>
     </div>
   {% endfor %}
 
@@ -86,11 +87,11 @@ const swiper = new Swiper('.swiper', {
    slidesPerView : 5,
    slidesPerGroup : 5,
 
-  autoplay: {
-    delay : 2000,
-    disableOnInteraction : false,
-    pauseOnMouseEnter: true,
-  }
+//   autoplay: {
+//     delay : 2000,
+//     disableOnInteraction : false,
+//     pauseOnMouseEnter: true,
+//   }
 });
 
 </script>
