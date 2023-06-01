@@ -2,24 +2,21 @@
 
 namespace App\DataFixtures;
 
-use App\Entity\Categorie;
-use App\Entity\Format;
-use App\Entity\Calendrier;
 use Faker\Factory;
 use App\Entity\Post;
-use App\Repository\FormatRepository;
+use App\Entity\Format;
 use DateTimeImmutable;
+use App\Entity\Categorie;
+use App\Entity\Calendrier;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
-use Doctrine\ORM\EntityManager;
+use Symfony\Component\String\Slugger\SluggerInterface;
+use Symfony\Component\Validator\Constraints\Length;
 
-class AppFixtures extends Fixture
+class PostFixtures extends Fixture
 {
-//?------ injections de données factices dans la BDD avec faker php ------//
-
     public function load(ObjectManager $manager): void
     {
-
         // use the factory to create a Faker\Generator instance
         $faker = Factory::create();
 
@@ -31,9 +28,11 @@ class AppFixtures extends Fixture
             $manager->persist($calendrier);
         }
 
-        for ($i=0; $i < 10; $i++) {  
+        $allCategorie = ['développement', 'design', 'marketing', 'business', 'photographie', 'lifestyle', 'informatique', 'sport', 'voyage', 'musique'];
+        for ($i=0; $i < count($allCategorie)-1; $i++) {  
             $categorie = new Categorie;
-            $categorie->setNom($faker->words(3, true));
+            $categorie->setNom($allCategorie[$i]);
+
             $manager->persist($categorie);
         }
 
@@ -52,7 +51,7 @@ class AppFixtures extends Fixture
             $post = new Post;
             $post->setPricing($faker->numberBetween(0,1));
             $post->setShare($faker->numberBetween(0,1));
-            $post->setTitre($faker->text(8));
+            $post->setTitre($faker->words(3,true));
             $post->setCorps($faker->paragraph(rand(5,8),true));
             $post->setDescription($faker->sentence(12));
             $post->setKeywords($faker->words(3,true));
@@ -63,6 +62,13 @@ class AppFixtures extends Fixture
             $post->addCategorie($manager->getRepository(Categorie::class)->findAll()[rand(0,count($manager->getRepository(Categorie::class)->findAll() ) - 1 )]);
             $post->addCategorie($manager->getRepository(Categorie::class)->findAll()[rand(0,count($manager->getRepository(Categorie::class)->findAll() ) - 1 )]);
             $post->addCategorie($manager->getRepository(Categorie::class)->findAll()[rand(0,count($manager->getRepository(Categorie::class)->findAll() ) - 1 )]);
+
+            $post->setTheme($faker->words(3,true));
+            $post->setSlug(
+                // slug constituer du theme+titre+date de publication
+                str_replace(' ','-',$post->getTheme().'--'.$post->getTitre().'-'.$post->getPublishAt()->format('Ymd'))
+                
+            );
 
             $manager->persist($post);
         }

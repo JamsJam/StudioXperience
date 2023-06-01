@@ -17,11 +17,13 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class PostType extends AbstractType
 {
@@ -34,30 +36,26 @@ class PostType extends AbstractType
         $builder
             ->add('pricing',ChoiceType::class,[
                 'label' => 'payant',
-                'attr' => [
-                    'placeholder' => 'payant'
-                
-                    ],
                 "expanded" => true,
                 "multiple" => false,
                 'choices' => [
-                    'oui' => true,
-                    'non' => false
+                    'oui' => 1,
+                    'non' => 0,
                 ],
+                'placeholder' => false,
                 'required' => false,
             ])
             ->add('share',ChoiceType::class,[
                 'label' => 'Partage',
-                'attr' => [
-                    'placeholder' => 'Partage'
-                ],
+                'placeholder' => false,
                 "expanded" => true,
                 "multiple" => false,
                 'choices' => [
-                    'oui' => true,
-                    'non' => false
+                    'oui' => 1,
+                    'non' => 0,
                 ],
                 'required' => false,
+                
             ])
             ->add('titre',TextType::class,[
                 "label" => "Titre",

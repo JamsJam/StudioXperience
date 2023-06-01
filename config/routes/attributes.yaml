@@ -1,0 +1,13 @@
+# # Cette configuration indique à Symfony de rechercher des routes définies en tant qu'attributs sur des classes déclarées dans l'espace de noms App\Controller et stockées dans le répertoire src/Controller/, qui suit la norme PSR-4. Le kernel peut également agir en tant que contrôleur, ce qui est particulièrement utile pour les petites applications qui utilisent Symfony comme micro-framework.
+
+
+
+controllers:
+    resource:
+        path: ../../src/Controller/
+        namespace: App\Controller
+    type: attribute
+
+kernel:
+    resource: App\Kernel
+    type: attribute

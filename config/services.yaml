@@ -7,6 +7,9 @@ parameters:
     article_video : '%kernel.project_dir%/public/uploads/article/video'
     article_image : '%kernel.project_dir%/public/uploads/article/image'
     article_audio : '%kernel.project_dir%/public/uploads/article/audio'
+    # app.supported_locales: 'en|fr '
+    # app.default_locale: '%kernel.default_locale%'
+
 services:
 
     _defaults:
