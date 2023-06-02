@@ -1,99 +1,103 @@
-{% extends 'base.html.twig' %}
+	{% extends 'base.html.twig' %}
 
-{% block title %}Hello HomeController!{% endblock %}
+	{% block title %}Hello HomeController!{% endblock %}
 
-{% block body %}
+	{% block body %}
+	{{ encore_entry_script_tags('app') }}
+	<style>
+	.swiper {
+		width: 99vw;
+		height: 300px;
+		background-color : black;
+	}
 
-<style>
-  .swiper {
-    width: 99vw;
-    height: 300px;
-    background-color : black;
-  }
+	.swiper-slide{
+		background-color : crimson;
+		display : flex;
+		flex-direction : column;
+		justify-content: center;
+		align-items: center;
+		gap : 0.5vw;
+	}
 
-  .swiper-slide{
-    background-color : crimson;
-    display : flex;
-    flex-direction : column;
-    justify-content: center;
-    align-items: center;
-    gap : 0.5vw;
-  }
+	.swiper-slide>h5{
+		font-size: 20px;
+		text-align: center;
+		margin-block : 10px;
+	}
 
-  .swiper-slide>h5{
-    font-size: 20px;
-    text-align: center;
-    margin-block : 10px;
-  }
+	.swiper-slide>p{
+		margin-inline : 5px;
+		margin-block : 0;
+	}
+	</style>
 
-  .swiper-slide>p{
-    margin-inline : 5px;
-    margin-block : 0;
-  }
-</style>
+	<!-- Slider main container -->
+	{% if latest_post | length >= 20 %}
+		<div class="swiper">
+		<!-- Additional required wrapper -->
+			<div class="swiper-wrapper">
+				<!-- Slides -->
+				{% for post in latest_post %}
+					<div class="swiper-slide">
+					<h5>{{post.titre|trans}}</h5>
+					<p>{{post.description}}</p>
+						<a href="{{path('app_front_post_show', {'slug': post.slug})}}">Voir plus</a>
+					</div>
+				{% endfor %}
 
-<!-- Slider main container -->
-{%if latest_post | length >= 20 %}
-<div class="swiper">
-  <!-- Additional required wrapper -->
-  <div class="swiper-wrapper">
-    <!-- Slides -->
-  {% for post in latest_post %}
-    <div class="swiper-slide">
-      <h5>{{post.titre|trans}}</h5>
-      <p>{{post.description}}</p>
-        <a href="{{path('app_front_post_show', {'slug': post.slug})}}">Voir plus</a>
+			</div>
+		<!-- If we need pagination -->
+			<div class="swiper-pagination"></div>
+
+			<!-- If we need navigation buttons -->
+			{# <div class="swiper-button-prev"></div>
+			<div class="swiper-button-next"></div> #}
+
+			<!-- If we need scrollbar -->
+			<div class="swiper-scrollbar"></div>
+		</div>
+	{% else %}
+	{% endif %}
+
+	 <div {{ react_component('MyComponent', { 'fullName': "Mark" }) }}>
+        Loading... 
     </div>
-  {% endfor %}
 
-  </div>
-  <!-- If we need pagination -->
-  <div class="swiper-pagination"></div>
+	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+	<script>
 
-  <!-- If we need navigation buttons -->
-  {# <div class="swiper-button-prev"></div>
-  <div class="swiper-button-next"></div> #}
+		const swiper = new Swiper('.swiper', {
+		// Optional parameters
+		direction: 'horizontal',
+		loop: true,
 
-  <!-- If we need scrollbar -->
-  <div class="swiper-scrollbar"></div>
-</div>
-{% else %}
-{% endif %}
+		// If we need pagination
+		pagination: {
+			el: '.swiper-pagination',
+		},
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
-<script>
+		// Navigation arrows
+		{# navigation: {
+			nextEl: '.swiper-button-next',
+			prevEl: '.swiper-button-prev',
+		}, #}
 
-const swiper = new Swiper('.swiper', {
-  // Optional parameters
-  direction: 'horizontal',
-  loop: true,
+		// And if we need scrollbar
+		scrollbar: {
+			el: '.swiper-scrollbar',
+		},
+		spaceBetween: 25,
+		slidesPerView : 5,
+		slidesPerGroup : 5,
 
-  // If we need pagination
-  pagination: {
-    el: '.swiper-pagination',
-  },
+		//   autoplay: {
+		//     delay : 2000,
+		//     disableOnInteraction : false,
+		//     pauseOnMouseEnter: true,
+		//   }
+		});
 
-  // Navigation arrows
-  {# navigation: {
-    nextEl: '.swiper-button-next',
-    prevEl: '.swiper-button-prev',
-  }, #}
+	</script>
 
-  // And if we need scrollbar
-  scrollbar: {
-    el: '.swiper-scrollbar',
-  },
-   spaceBetween: 25,
-   slidesPerView : 5,
-   slidesPerGroup : 5,
-
-//   autoplay: {
-//     delay : 2000,
-//     disableOnInteraction : false,
-//     pauseOnMouseEnter: true,
-//   }
-});
-
-</script>
-
-{% endblock %}
+	{% endblock %}
