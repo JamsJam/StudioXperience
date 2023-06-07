@@ -8,18 +8,51 @@
 <style>
 .mouse-follow{
     position: absolute;
-    transition : width 0.7s ease;
+    transition : height 0.7s ease;
+    border-radius : 15px
 }
 
 .mouse-follow-inactive{
+    height: 0px;
     width: 0px;
     
 }
 .mouse-follow-active{
-    height: 100px;
-    width: 150px;
-    z-index: 1;
+    height: 150px;
+    width: 250px;
+    z-index: 10;
     background-color : hsla(214, 100%, 50%, 1);
+}
+form[name="calendrier"]{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+#calendrier{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+    gap:3px
+}
+#calendrier > div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+#calendrier_beginAt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+}
+#calendrier_endAt{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
 }
 
 </style>
@@ -64,8 +97,9 @@
 </div>
 
 <div class="mouse-follow">
-
+{{ include('/back_office/calendrier/_form.html.twig') }}
 </div>
+
 
 
 
@@ -81,38 +115,71 @@
     <script type="text/javascript">
 
     let mouseFollow = document.querySelector('.mouse-follow')
-    //quand MouseActive est faux mouseFollow s'affiche
+    //quand isMouseActive est faux mouseFollow s'affiche
     let isMouseActive = true
- 
-    function updateDisplay(event) {
-        //ajout du formulaire new ici
-    // let text = document.createElement = ("p")
-    // let link = document.createElement = ("a")
 
-    pageX = event.pageX;
-    pageY = event.pageY;
-    mouseFollow.style.top = `${pageY}px`
-    mouseFollow.style.left = `${pageX}px`
-    if(isMouseActive){
-    mouseFollow.classList.remove("mouse-follow-inactive")
-    mouseFollow.classList.add("mouse-follow-active")
+function updateDisplay(event) {
 
-    isMouseActive = false
-    }else{
-    mouseFollow.classList.remove("mouse-follow-active")
-    mouseFollow.classList.add("mouse-follow-inactive")
-    isMouseActive = true
+    if(event.target.hasAttribute("data-date")){
+
+        let selectedDayDate = event.target.getAttribute("data-date")
+        
+        numbers = selectedDayDate.split('-')
+        let month = parseInt(numbers[1].substring(1))
+        let day = parseInt(numbers[2])
+        let year = parseInt(numbers[0])
+
+        let selectMonth = document.querySelector("#calendrier_beginAt_date_month")
+        let selectDay = document.querySelector("#calendrier_beginAt_date_day")
+        let selectYear = document.querySelector("#calendrier_beginAt_date_year")
+  
+        selectMonth.value = month
+        selectDay.value = day
+        selectYear.value = year
+
+
+
+        pageX = event.pageX;
+        pageY = event.pageY;
+
+        let calendarHolder = document.querySelector("#calendar-holder")
+        let modalPercentageYOffset = (pageY / calendarHolder.offsetHeight) * 100;
+        let modalPercentageXOffset = (pageX / window.innerWidth) * 100;
+        let modalHeight = 150;
+        let modalWidth = 250;
+
+        if(modalPercentageYOffset > 120){
+            mouseFollow.style.top = `${pageY - modalHeight}px`
+        }else{
+            mouseFollow.style.top = `${pageY}px`
+        }
+
+
+        if(modalPercentageXOffset > 65){
+            mouseFollow.style.left = `${pageX - modalWidth}px`
+        }else{
+            mouseFollow.style.left = `${pageX}px`
+        }
+        
+        if(isMouseActive){
+            mouseFollow.classList.remove("mouse-follow-inactive")
+            mouseFollow.classList.add("mouse-follow-active")
+            isMouseActive = false
+        }else{
+            mouseFollow.classList.remove("mouse-follow-active")
+            mouseFollow.classList.add("mouse-follow-inactive")
+            isMouseActive = true
+        }
     }
-    console.log(isMouseActive)
-    }
+}
 
 
 
 document.addEventListener('DOMContentLoaded', () => {
     var calendarEl = document.getElementById('calendar-holder');
-    //quand je click mouseFollow se déplace à l'endroit de la souris
-    calendarEl.addEventListener('click',updateDisplay,false)
+    //quand je click la modal mouseFollow se déplace à l'endroit de la souris
 
+        calendarEl.addEventListener('click',updateDisplay,false)
     var calendar = new FullCalendar.Calendar(calendarEl, {
         defaultView: 'dayGridMonth',
         editable: true,
@@ -141,7 +208,8 @@ document.addEventListener('DOMContentLoaded', () => {
     })
 calendar.setOption('locale','fr')
 calendar.render();
-});
+});         
+            
     </script>
 
 {% endblock %}

@@ -55,3 +55,45 @@ Le projet se basera sur les technologies suivantes :
 -   API Platform (voir la [documentation](https://api-platform.com/docs/core/getting-started/)) : framework PHP pour la gestion des API REST associer à Symfony
 -   Logger (voir la [documentation](https://symfony.com/doc/current/logging.html)) : librairie PHP pour la gestion des logs 
 
+## Installation
+
+récupérer le repo git hub
+
+    git clone https://github.com/JamsJam/StudioXperience
+#
+récupérer les derniers push sur developpe
+
+    git checkout developpe
+    git pull
+
+#
+
+se déplacer sur sa branche de travail
+
+    git checkout "branch" 
+    /ou/ 
+    git checkout -b "branch"
+
+#
+
+dans le fichier .env   changer le chemin d'accès à la base de donnée que nous allons créer par la suite
+
+- app = pseudo de connexion à php my admin
+- !ChangeMe! = Mot de passe (facultatif))
+
+> DATABASE_URL="mysql://app:!ChangeMe!@127.0.0.1:3306/studioxperience?serverVersion=8.0.32&cgitharset=utf8mb4"
+> 
+#
+Lancer `composer update` pour mettre à jour les dépendances 
+
+Par la suite pour créer la **base de donnée** effectuer les commandes suivantes :
+
+     php bin/console doctrine:database:create
+     php bin/console doctrine:schema:update --force
+#
+Enfin lancer `npm install` pour récupérer webpack et les autre dépendances puis `npm run watch` pour activer la compilation du code 
+#
+Pour afficher le site en local :
+
+    php -S localhost:8000 -t public
+
