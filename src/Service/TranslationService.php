@@ -28,16 +28,16 @@ class TranslationService
     {
         //? get the article instance ====================
 
-        $article = $this->entityManager->getRepository(Post::class)->findBy($postId);
+            $article = $this->entityManager->getRepository(Post::class)->findBy($postId);
 
         //! ============================================
 
 
         //? add the translation to the article ==========
 
-        $article->setTitle($translatedTitle);
-        $translatedContent && $article->setContent($translatedContent);
-        $article->setLocale($locale);
+            $article->setTitle($translatedTitle);
+            $translatedContent && $article->setContent($translatedContent);
+            $article->setLocale($locale);
         
         //! ============================================
         

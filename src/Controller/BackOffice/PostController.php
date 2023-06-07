@@ -116,6 +116,10 @@ class PostController extends AbstractController
                     }
                 //! ==============================================
                 
+                //? ===========  Handle slug  =====================
+                    $slug = str_replace(" ","-",$post->getTitre()."--".$post->getTheme()."-".$post->getPublishAt()->format('Y-m-d'));
+                    $post->setSlug($slug);
+                //! ==============================================
                 
                 //? ===========  Handle calendar  =================
                 
