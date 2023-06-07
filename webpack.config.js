@@ -50,7 +50,7 @@ Encore
 
     // configure Babel
     .configureBabel((config) => {
-        config.plugins.push('@babel/a-babel-plugin');
+        // config.plugins.push('@babel/plugin-syntax-jsx');
     })
 
     // enables and configure @babel/preset-env polyfills

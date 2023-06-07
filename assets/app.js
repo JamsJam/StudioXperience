@@ -18,6 +18,7 @@ import './bootstrap';
 // assets/app.js
 import { registerReactControllerComponents } from '@symfony/ux-react';
 
+
 // Registers React controller components to allow loading them from Twig
 //
 // React controller components are components that are meant to be rendered
