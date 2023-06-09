@@ -25,7 +25,7 @@ class CalendrierController extends AbstractController
     //     return $this->render('calendrier/index.html.twig');
     // }
 
-    #[Route('/', name: 'app_back_office_calendrier_index', methods: ['GET'])]
+    #[Route('/', name: 'app_back_office_calendrier_index', methods: ['GET','POST'])]
     public function index(Request $request,CalendrierRepository $calendrierRepository): Response
     {
         $events = $calendrierRepository->findAll();

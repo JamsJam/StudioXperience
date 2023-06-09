@@ -7,40 +7,77 @@
 {% block body %}
 <style>
 .mouse-follow{
+    display: none;
     position: absolute;
-    transition : height 0.7s ease;
-    border-radius : 15px
+    transition : max-height 0.5s ease;
+    border-radius : 15px;
 }
 
 .mouse-follow-inactive{
-    height: 0px;
-    width: 0px;
+    display: block;
+    max-height: 0px !important;
+    width: 250px;
     
 }
 .mouse-follow-active{
-    height: 150px;
+    display: block;
+    max-height: 278px;
     width: 250px;
     z-index: 10;
-    background-color : hsla(214, 100%, 50%, 1);
-}
+    background-color : #45a5bf;
+    
+    }
+
+.selectedDate{
+    background: linear-gradient(359deg, #539eb3, #39d858);
+    background-size: 400% 400%;
+
+    -webkit-animation: backgroundGradient 3s ease infinite;
+    animation: backgroundGradient 3s ease infinite;
+    }
+
+    @-webkit-keyframes backgroundGradient {
+        0%{background-position:0% 88%}
+        50%{background-position:100% 13%}
+        100%{background-position:0% 88%}
+    }
+    @keyframes backgroundGradient {
+        0%{background-position:0% 88%}
+        50%{background-position:100% 13%}
+        100%{background-position:0% 88%}
+    }
+
 form[name="calendrier"]{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction:column;
+    gap: 10px;
+    padding-block: 10px;
+    appearance: none;
+    pointer-events:none;
+    opacity: 0;
+    transition : opacity 0.1s cubic-bezier(1,0,1,.55) ;
 }
+.formShow{
+    pointer-events:auto !important;
+    appearance: auto ! important;
+    opacity: 1 !important;
+}
+
 #calendrier{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction:column;
-    gap:3px
+    gap:20px
 }
 #calendrier > div{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction:column;
+    gap : 5px
 }
 #calendrier_beginAt{
     display: flex;
@@ -53,6 +90,27 @@ form[name="calendrier"]{
     justify-content: center;
     align-items: center;
     flex-direction:column;
+}
+#calendrier_title,
+#calendrier_beginAt_date_month,
+#calendrier_beginAt_date_day,
+#calendrier_beginAt_date_year,
+#calendrier_endAt_date_month,
+#calendrier_endAt_date_day,
+#calendrier_endAt_date_year,
+#calendrier_beginAt_time_hour,
+#calendrier_beginAt_time_minute,
+#calendrier_endAt_time_hour,
+#calendrier_endAt_time_minute,
+.btn
+{
+    background-color: white;
+    border: 1px #343b42 solid;
+    border-radius: 5px;
+    height: 22.5px;
+}
+.fc-day-top{
+    background-color : black;
 }
 
 </style>
@@ -92,6 +150,7 @@ form[name="calendrier"]{
     <a href="{{ path('app_back_office_calendrier_new') }}">Create new</a>
     <a href="{{ path('app_back_office_calendrier_new') }}">Create new Calendrier</a>
 
+    <h1>Changer le selecteur d'attribut de event pour pouvoir selectionné le td des date aussi</h1>
 {# ------------------Calendrier--------------- #}
     <div id="calendar-holder"></div>
 </div>
@@ -114,62 +173,89 @@ form[name="calendrier"]{
 
     <script type="text/javascript">
 
-    let mouseFollow = document.querySelector('.mouse-follow')
-    //quand isMouseActive est faux mouseFollow s'affiche
-    let isMouseActive = true
+function setDate(event){
+
+    let selectedDayDate = event.target.getAttribute("data-date")
+    
+    numbers = selectedDayDate.split('-')
+    let month = parseInt(numbers[1].substring(1))
+    let day = parseInt(numbers[2])
+    let year = parseInt(numbers[0])
+
+    // BeginAt
+    let selectMonthBegin = document.querySelector("#calendrier_beginAt_date_month")
+    let selectDayBegin = document.querySelector("#calendrier_beginAt_date_day")
+    let selectYearBegin = document.querySelector("#calendrier_beginAt_date_year")
+
+    selectMonthBegin.value = month
+    selectDayBegin.value = day
+    selectYearBegin.value = year
+
+    //EndAt
+    let selectMonthEnd = document.querySelector("#calendrier_endAt_date_month")
+    let selectDayEnd = document.querySelector("#calendrier_endAt_date_day")
+    let selectYearEnd = document.querySelector("#calendrier_endAt_date_year")
+
+    selectMonthEnd.value = month
+    selectDayEnd.value = day
+    selectYearEnd.value = year
+}
+
+
+function setPosition(event){
+
+    pageX = event.pageX;
+    pageY = event.pageY;
+
+    let calendarHolder = document.querySelector("#calendar-holder")
+    let modalHeight = 278;
+    let modalWidth = 250;
+    let modalPercentageYOffset = (pageY / calendarHolder.offsetHeight) * 100;
+    let modalPercentageXOffset = (pageX / window.innerWidth) * 100;
+
+    if(modalPercentageYOffset > 108){
+        mouseFollow.style.top = `${pageY - modalHeight}px`
+    }else{
+        mouseFollow.style.top = `${pageY}px`
+    }
+    if(modalPercentageXOffset > 65){
+        mouseFollow.style.left = `${pageX - modalWidth - 5}px`
+    }else{
+        mouseFollow.style.left = `${pageX + 5}px`
+    }
+}
+
+let mouseFollow = document.querySelector('.mouse-follow')
+//quand isMouseActive est faux la modal mouseFollow s'affiche
+let isMouseActive = true
+let form = document.querySelector("form[name=\"calendrier\"]")
 
 function updateDisplay(event) {
 
     if(event.target.hasAttribute("data-date")){
-
-        let selectedDayDate = event.target.getAttribute("data-date")
+        // console.log(event);
+        setDate(event)
+        setPosition(event)
         
-        numbers = selectedDayDate.split('-')
-        let month = parseInt(numbers[1].substring(1))
-        let day = parseInt(numbers[2])
-        let year = parseInt(numbers[0])
-
-        let selectMonth = document.querySelector("#calendrier_beginAt_date_month")
-        let selectDay = document.querySelector("#calendrier_beginAt_date_day")
-        let selectYear = document.querySelector("#calendrier_beginAt_date_year")
-  
-        selectMonth.value = month
-        selectDay.value = day
-        selectYear.value = year
-
-
-
-        pageX = event.pageX;
-        pageY = event.pageY;
-
-        let calendarHolder = document.querySelector("#calendar-holder")
-        let modalPercentageYOffset = (pageY / calendarHolder.offsetHeight) * 100;
-        let modalPercentageXOffset = (pageX / window.innerWidth) * 100;
-        let modalHeight = 150;
-        let modalWidth = 250;
-
-        if(modalPercentageYOffset > 120){
-            mouseFollow.style.top = `${pageY - modalHeight}px`
-        }else{
-            mouseFollow.style.top = `${pageY}px`
-        }
-
-
-        if(modalPercentageXOffset > 65){
-            mouseFollow.style.left = `${pageX - modalWidth}px`
-        }else{
-            mouseFollow.style.left = `${pageX}px`
-        }
-        
+        //logique affichage de la modal
         if(isMouseActive){
             mouseFollow.classList.remove("mouse-follow-inactive")
             mouseFollow.classList.add("mouse-follow-active")
+            //vue de la date selectionné et du formulaire
+            event.target.classList.add("selectedDate") 
+            form.classList.add("formShow")
             isMouseActive = false
         }else{
-            mouseFollow.classList.remove("mouse-follow-active")
             mouseFollow.classList.add("mouse-follow-inactive")
+            // mouseFollow.classList.remove("mouse-follow-active")
+            // forEach pour select toutes les cases jour du tableau
+            document.querySelectorAll(".fc-day").forEach(element => {
+                element.classList.remove("selectedDate")
+            });
+            form.classList.remove("formShow")
             isMouseActive = true
         }
+          
     }
 }
 
@@ -177,24 +263,30 @@ function updateDisplay(event) {
 
 document.addEventListener('DOMContentLoaded', () => {
     var calendarEl = document.getElementById('calendar-holder');
+    
     //quand je click la modal mouseFollow se déplace à l'endroit de la souris
-
-        calendarEl.addEventListener('click',updateDisplay,false)
+    calendarEl.addEventListener('click',updateDisplay,false)
+    
     var calendar = new FullCalendar.Calendar(calendarEl, {
         defaultView: 'dayGridMonth',
-        editable: true,
-        eventSources: [
+        events : [
             {
-                url: "{{ path('fc_load_events') }}",
-                method: "POST",
-                extraParams: {
-                    filters: JSON.stringify({})
-                },
-                failure: () => {
-                    // alert("There was an error while fetching FullCalendar!");
-                },
-            },
+                display : 'background'
+            }
         ],
+        editable: true,
+            eventSources: [
+                {
+                    url: "{{ path('fc_load_events') }}",
+                    method: "POST",
+                    extraParams: {
+                        filters: JSON.stringify({})
+                    },
+                    failure: () => {
+                        // alert("There was an error while fetching FullCalendar!");
+                    },
+                },
+            ],
         header: {
             left: 'prev,next today',
             center: 'title',
@@ -204,8 +296,13 @@ document.addEventListener('DOMContentLoaded', () => {
         timeZone: 'UTC',
         dateClick : function(info) {
             //Permet de configurer un event au click d'une date
+            // console.log(info);
+        },
+        //permet de configuer toutes les dates 
+        dayRender : function (dayRenderInfo) {
+            // console.log(dayRenderInfo)
         }
-    })
+        });
 calendar.setOption('locale','fr')
 calendar.render();
 });         

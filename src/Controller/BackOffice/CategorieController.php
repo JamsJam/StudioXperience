@@ -13,9 +13,10 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/back/office/categorie')]
 class CategorieController extends AbstractController
 {
-    #[Route('/', name: 'app_back_office_categorie_index', methods: ['GET'])]
+    #[Route('/', name: 'app_back_office_categorie_index', methods: ['GET','POST'])]
     public function index(CategorieRepository $categorieRepository): Response
     {
+        
         return $this->render('back_office/categorie/index.html.twig', [
             'categories' => $categorieRepository->findAll(),
         ]);
