@@ -150,14 +150,13 @@ form[name="calendrier"]{
     <a href="{{ path('app_back_office_calendrier_new') }}">Create new</a>
     <a href="{{ path('app_back_office_calendrier_new') }}">Create new Calendrier</a>
 
-    <h1>Changer le selecteur d'attribut de event pour pouvoir selectionné le td des date aussi</h1>
+<div class="mouse-follow">
+{{ include('/back_office/calendrier/_form.html.twig') }}
+</div>
 {# ------------------Calendrier--------------- #}
     <div id="calendar-holder"></div>
 </div>
 
-<div class="mouse-follow">
-{{ include('/back_office/calendrier/_form.html.twig') }}
-</div>
 
 
 
