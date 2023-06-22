@@ -2,8 +2,9 @@
 
 namespace App\Entity;
 
-use App\Repository\MediaRepository;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\MediaRepository;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: MediaRepository::class)]
 class Media
@@ -17,15 +18,19 @@ class Media
     private ?string $alt = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $vignette = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $src = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $extension = null;
 
     #[ORM\ManyToOne(inversedBy: 'media')]
