@@ -37,6 +37,29 @@
         </p>
     </video>
 
+<h2> block video avec pub</h2>
+    <video
+        id="my-video-add"
+        class="video-js"
+        controls
+        preload="auto"
+        width="640"
+        height="264"
+        {# poster="MY_VIDEO_POSTER.jpg" #}
+        data-setup="{}"
+        >
+        
+
+        {# <source src="MY_VIDEO.webm" type="video/webm" /> #}
+        <p class="vjs-no-js">
+            To view this video please enable JavaScript, and consider upgrading to aweb browser that
+
+            <a href="https://videojs.com/html5-video-support/" target="_blank">
+                supports HTML5 video
+            </a>
+        </p>
+    </video>
+
 
 {% endblock %}
     {% block script %}
@@ -78,6 +101,31 @@
                 }
             });
         });
+
+    </script>
+
+    <script>
+        player = videojs("my-video-add")
+    
+        player.poster('{{asset('./images/test-thumbnail.jpg')}}')
+        
+        player.ready(()=>{
+
+            player.src([
+                {type : 'video/mp4', src: '{{asset('./Videos/animation_studio_Okai_AdobeExpress.mp4')}}' }
+            ])
+
+            player.on("ended", ()=>{
+
+                    player.src([
+                        {type : 'video/mp4', src: '{{asset('./Videos/Animation-liste-Noir.mp4')}}' }
+                    ])
+                    player.play()
+            })
+
+        })
+
+    
     </script>
             
 {% endblock %}

@@ -25,15 +25,27 @@ class CalendrierController extends AbstractController
     //     return $this->render('calendrier/index.html.twig');
     // }
 
-    #[Route('/', name: 'app_back_office_calendrier_index', methods: ['GET'])]
-    public function index(CalendrierRepository $calendrierRepository): Response
+    #[Route('/', name: 'app_back_office_calendrier_index', methods: ['GET','POST'])]
+    public function index(Request $request,CalendrierRepository $calendrierRepository): Response
     {
         $events = $calendrierRepository->findAll();
         $eventsJson = json_encode($events);
 
+        $calendrier = new Calendrier();
+        $form = $this->createForm(CalendrierType::class, $calendrier);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $calendrierRepository->save($calendrier, true);
+
+            return $this->redirectToRoute('app_back_office_calendrier_index', [], Response::HTTP_SEE_OTHER);
+        }
+
         return $this->render('/back_office/calendrier/index.html.twig', [
             'calendriers' => $calendrierRepository->findAll(),
-            'events_json' => $eventsJson
+            'events_json' => $eventsJson,
+            'calendrier' => $calendrier,
+            'form' => $form,
         ]);
     }
 
