@@ -2,14 +2,16 @@
 
 namespace App\Entity;
 
-use App\Repository\PostRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use App\Repository\PostRepository;
+use Gedmo\Translatable\Translatable;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
-class Post
+class Post implements Translatable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -22,12 +24,15 @@ class Post
     #[ORM\Column]
     private ?bool $share = null;
 
+    #[Gedmo\Translatable]
     #[ORM\Column(length: 255)]
     private ?string $titre = null;
 
+    #[Gedmo\Translatable]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $corps = null;
 
+    #[Gedmo\Translatable]
     #[ORM\Column(length: 255)]
     private ?string $description = null;
 
@@ -46,6 +51,19 @@ class Post
 
     #[ORM\OneToMany(mappedBy: 'fk_post', targetEntity: Media::class, orphanRemoval: true)]
     private Collection $media;
+
+    #[ORM\Column(length: 70)]
+    private ?string $theme = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $slug = null;
+
+    // /**
+    //  * Used locale to override Translation listener`s locale
+    //  * this is not a mapped field of entity metadata, just a simple property
+    //  */
+    #[Gedmo\Locale]
+    private $locale;
 
     public function __construct()
     {
@@ -206,5 +224,34 @@ class Post
         }
 
         return $this;
+    }
+
+    public function getTheme(): ?string
+    {
+        return $this->theme;
+    }
+
+    public function setTheme(string $theme): self
+    {
+        $this->theme = $theme;
+
+        return $this;
+    }
+
+    public function getSlug(): ?string
+    {
+        return $this->slug;
+    }
+
+    public function setSlug(string $slug): self
+    {
+        $this->slug = $slug;
+
+        return $this;
+    }
+
+    public function setTranslatableLocale($locale)
+    {
+        $this->locale = $locale;
     }
 }

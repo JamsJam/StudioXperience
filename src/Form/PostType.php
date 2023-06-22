@@ -5,73 +5,66 @@ namespace App\Form;
 use App\Entity\Post;
 use App\Entity\Format;
 use App\Entity\Categorie;
-use Symfony\Component\Form\AbstractType;
+use GuzzleHttp\Psr7\Request;
 
+use Symfony\Component\Form\AbstractType;
 use App\EventSubscriber\PostFormSubscriber;
 use Eckinox\TinymceBundle\Form\Type\TinymceType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\HttpKernel\Event\RequestEvent;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\RadioType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use PHPUnit\TextUI\XmlConfiguration\CodeCoverage\Report\Text;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Choice;
 
 class PostType extends AbstractType
 {
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+
+        $format = $options['format'];
+        
         $builder
             ->add('pricing',ChoiceType::class,[
                 'label' => 'payant',
-                'attr' => [
-                    'placeholder' => 'payant'
-                
-                    ],
                 "expanded" => true,
                 "multiple" => false,
                 'choices' => [
-                    'oui' => true,
-                    'non' => false
+                    'oui' => 1,
+                    'non' => 0,
                 ],
+                'placeholder' => false,
                 'required' => false,
             ])
             ->add('share',ChoiceType::class,[
                 'label' => 'Partage',
-                'attr' => [
-                    'placeholder' => 'Partage'
-                ],
+                'placeholder' => false,
                 "expanded" => true,
                 "multiple" => false,
                 'choices' => [
-                    'oui' => true,
-                    'non' => false
+                    'oui' => 1,
+                    'non' => 0,
                 ],
                 'required' => false,
+                
             ])
             ->add('titre',TextType::class,[
                 "label" => "Titre",
             ])
-            //! Utilisera un module WYSIWYG pour l'éditeur de texte via TinyMCE
-            ->add('corps',TextareaType::class, [
-                "required" => false,
-                // "attr" => [
-                //             "plugins" =>  
-                //                 'advlist autolink link image lists charmap print preview hr anchor pagebreak searchreplace wordcount visualblocks visualchars code fullscreen insertdatetime media nonbreaking table emoticons template paste help codesample a11ychecker '
-                //             ,
 
-                //             "toolbar"=> 'undo redo | styleselect | bold italic copy paste | outdent indent | table image | emoticons visualchars code | numlist bullist anchor link | preview codesample',
-                            
-                //             "image_title"=>true,
-                            
-                //             "menubar"=>"file edit view insert format tools help",
-                //     ]
-            ]) 
-            ->addEventSubscriber( new PostFormSubscriber()) 
-           
+
+
+
+
             ->add('description',TextType::class,[
                 'label' => 'Description',
                 'attr' => [
@@ -92,16 +85,7 @@ class PostType extends AbstractType
                 ],
                 'mapped' => false,
             ])
-            ->add('format',EntityType::class,[
-                'class' => Format::class,
-                'choice_label' => 'nom',
-                'label' => 'Format',
-                'attr' => [
-                    'placeholder' => 'Format'
-                ],
-                'multiple' => false,  // Permet de sélectionner plusieurs catégories
-                'expanded' => true,  // Affiche les options comme des radios
-            ])
+
             ->add('categorie',EntityType::class,[
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
@@ -109,13 +93,75 @@ class PostType extends AbstractType
                 'expanded' => true,  // Affiche les options comme des checkboxes
                 
             ])
-        ;
+            
+            ->addEventSubscriber( new PostFormSubscriber());
+
+    //?  =========================================================================
+    //*             Champs selon le format du post
+    //?  =========================================================================
+
+        if($format == "Video"){
+            $builder
+            //! utiliser un module de type "file" pour l'upload de la vidéo
+                ->add('video',FileType::class,[
+                    'label' => 'Video',
+                    'attr' => [
+                        // 'placeholder' => 'Video'
+                    ],
+                    "mapped" => false,
+                ])
+                ->add('Transcription',TextareaType::class,[
+                    'label' => 'Video',
+                    'attr' => [
+                        'placeholder' => 'transcription'
+                    ],
+                    "mapped" => false,
+                ]);
+        }
+
+
+        if($format == "Article"){
+
+            $builder
+            //! Utilisera un module WYSIWYG pour l'éditeur de texte via TinyMCE
+                ->add('corps',TextareaType::class, [
+                    "required" => false,
+                ]); 
+        }
+
+
+        if($format == "Audio"){
+
+            $builder
+                ->add('audio',FileType::class,[
+                    'label' => 'Audio',
+                    'attr' => [
+                        'placeholder' => 'Audio'
+                    ],
+                    'mapped' => false,
+                ])
+                ->add('Transcription',TextareaType::class,[
+                    'label' => 'transcription',
+                    'attr' => [
+                        'placeholder' => 'transcription'
+                    ],
+                    "mapped" => false,
+                ]);
+        }
+
+    //?  =========================================================================
+
     }
+
+
+
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => Post::class,
+
+            'format' => null,
         ]);
     }
 }

@@ -3,19 +3,21 @@
 {% block title %}Post{% endblock %}
 
 {% block body %}
- {% if post %}{% endif %}
+
     <h1> Affichage test</h1>
 
-    {% if post.format == "article" %}
+    {% if post.format.nom == "article" %}
         <h2> block article</h2>
         {{ post.content|raw }}
     {% endif %} 
 
 {#? Si le poste est un podcast  #}
-    {% if post.format == "audio" %}
-        <h2> block audio</h2>
-            <div id="play" style="width:100px;height:100px;background:navy"></div>
-            <div id="siri-container"></div>
+    {% if post.format.nom == "audio" %}
+        
+        <div {{ react_component('PlayersAudio/PlayersAudio', { 'src':  asset("/sound/minamo.mp3") }) }}>
+    Hello
+        </div>
+         
 
     {% endif %} 
 
@@ -32,7 +34,7 @@
         {# poster="MY_VIDEO_POSTER.jpg" #}
         data-setup="{}"
         >
-        {# <source src="MY_VIDEO.webm" type="video/webm" /> #}
+        <source src="{{asset('Videos/Animation-liste-Noir.mp4')}}" type="video/mp4" />n
         <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to a web browser that
 
@@ -47,7 +49,7 @@
 
     <script src="https://unpkg.com/siriwave/dist/siriwave.umd.min.js"></script>
     <script src="https://vjs.zencdn.net/8.3.0/video.min.js"></script>
-    <script src="{{asset("./js/howler.core.js")}}"></script>
+
     <script>
         const player = videojs('my-video')
            
@@ -68,39 +70,39 @@
 
     <script>
 
-        document.addEventListener('DOMContentLoaded', function() {
-            let state = false;
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     let state = false;
 
-            const siriWave = new SiriWave({
-                container: document.getElementById("siri-container"),
-                width: 640,
-                height: 200,
-                color: "#000",
-            });
-            siriWave.stop();
+        //     const siriWave = new SiriWave({
+        //         container: document.getElementById("siri-container"),
+        //         width: 640,
+        //         height: 200,
+        //         color: "#000",
+        //     });
+        //     siriWave.stop();
                 
             
-            const sound = new Howl({
-                src: ['{{ asset("/sound/minamo.mp3") }}'],
-                html5: true,
-                volume: 0.5,
-                onplayerror: function() {
-                    sound.once('unlock', function() {
-                        sound.play();
-                    })
-                }
-            });
-            document.querySelector('#play').addEventListener('click', function() {
-                state = !state;
-                if (state) {
-                    sound.play();
-                    siriWave.start();
-                } else {
-                    sound.pause();
-                    siriWave.stop();
-                }
-            });
-        });
+        //     const sound = new Howl({
+        //         src: ['{{ asset("/sound/minamo.mp3") }}'],
+        //         html5: true,
+        //         volume: 0.5,
+        //         onplayerror: function() {
+        //             sound.once('unlock', function() {
+        //                 sound.play();
+        //             })
+        //         }
+        //     });
+        //     document.querySelector('#play').addEventListener('click', function() {
+        //         state = !state;
+        //         if (state) {
+        //             sound.play();
+        //             siriWave.start();
+        //         } else {
+        //             sound.pause();
+        //             siriWave.stop();
+        //         }
+        //     });
+        // });
     </script>
             
 

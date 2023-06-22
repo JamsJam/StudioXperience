@@ -11,14 +11,20 @@
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid@4.1.0/main.min.css">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid@4.1.0/main.min.css">
 
+        {#  Video.js #}
         <link href="https://vjs.zencdn.net/8.3.0/video-js.css" rel="stylesheet" />
         
-        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+        {# Filepond #}
+        <link href="https://unpkg.com/filepond@^4/dist/filepond.css" rel="stylesheet" />
 
+        {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
+            {# Filepond #}
+            <script src="https://unpkg.com/filepond@^4/dist/filepond.js" defer ></script>
          <script src="{{asset('./bundles/tinymce/ext/tinymce/tinymce.min.js')}}" defer=""></script>
             <script src= "{{ asset('./build/howler.js') }}" ></script>        
 
         {# {{ encore_entry_script_tags('tinyMCE') }} #}
+        {{ encore_entry_script_tags('app') }}
     </head>
     <body>
         {% block body %}{% endblock %}
