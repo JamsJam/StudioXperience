@@ -12,9 +12,9 @@ class CalendrierType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+            ->add('title')
             ->add('beginAt')
             ->add('endAt')
-            ->add('title')
         ;
     }
 
