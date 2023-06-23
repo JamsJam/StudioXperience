@@ -9,6 +9,7 @@ use Gedmo\Translatable\Translatable;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
 class Post implements Translatable
@@ -16,6 +17,7 @@ class Post implements Translatable
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    #[Groups(['sound:playlist:all'])]
     private ?int $id = null;
 
     #[ORM\Column]
@@ -26,6 +28,7 @@ class Post implements Translatable
 
     #[Gedmo\Translatable]
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $titre = null;
 
     #[Gedmo\Translatable]
@@ -34,25 +37,32 @@ class Post implements Translatable
 
     #[Gedmo\Translatable]
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $keywords = null;
 
     #[ORM\Column]
+    #[Groups(['sound:playlist:all'])]
     private ?\DateTimeImmutable $publishAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(['sound:playlist:all'])]
     private ?Format $format = null;
 
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'posts')]
+    #[Groups(['sound:playlist:all'])]
     private Collection $categorie;
 
     #[ORM\OneToMany(mappedBy: 'fk_post', targetEntity: Media::class, orphanRemoval: true)]
+    #[Groups(['sound:playlist:all'])]
     private Collection $media;
 
     #[ORM\Column(length: 70)]
+    #[Groups(['sound:playlist:all'])]
     private ?string $theme = null;
 
     #[ORM\Column(length: 255)]
