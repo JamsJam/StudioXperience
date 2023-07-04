@@ -1,0 +1,26 @@
+// placeholders
+
+//! =========================<Flex>=========================
+%flex-row-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+
+}
+
+%flex-column-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+
+//! =========================<Flex>=========================
+
+//! =========================<Transition>=========================
+%transition--bg-color  {
+    transition: background-color 0.3s ease-in-out, color 0.3s ease-in-out;
+}
+//! =========================<Transition>=========================

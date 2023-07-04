@@ -1,0 +1,64 @@
+@use  "../abstract/" as *;
+
+.input{
+    
+    
+    &__text{
+        @include radius(20px, "all");
+        width: 280px;
+        height: 33px;
+        
+        background-color: $blueGray;
+        border: none;
+        padding-inline-start: 1rem;
+        
+        color: $white;
+        font-size: $fs-18;
+        font-family: $ff-text;
+    }
+
+    &__checkbox{
+        appearance: none;
+
+        width: 30px;
+        height: 30px;
+        
+        background-color: transparent;
+        border: 2px solid $blueGray;
+
+        border-radius: 5px;
+
+        &--div{
+            width: fit-content;
+            position: relative;
+
+            .unchecked path{
+                stroke-dashoffset:0;
+            }
+
+            .checked path{
+                stroke-dashoffset:50;
+            }
+        }
+
+        &--svg{
+            fill-rule:evenodd;
+            clip-rule:evenodd;
+            stroke-linecap:round;
+            stroke-linejoin:round;
+            stroke-miterlimit:1.5;
+            
+            position: absolute;
+            left: 3px;
+
+            path{
+                fill:none;
+                stroke:#fff;
+                stroke-width:6px;
+                stroke-dasharray:50,50;
+                transition: stroke-dashoffset 0.5s ease-in-out;
+            }
+        }
+    }
+
+}
