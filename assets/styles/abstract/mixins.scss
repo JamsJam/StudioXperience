@@ -1,13 +1,13 @@
 
 
 //! =========================<Radius>=========================
-/*
-* @param $radius: radius value
-* @param $corner: corner value
-* @return: border-radius
-* @example: @include radius(5px, all);
-* @example: @include radius(5px, top); // radius-top-left and radius-top-right
-*/
+// *
+// * @param $radius: radius value
+// * @param $corner: corner value
+// * @return: border-radius
+// * @example: @include radius(5px, all);
+// * @example: @include radius(5px, top); // radius-top-left and radius-top-right
+// *
 @mixin radius($radius, $corner) {
     @if $corner == "all" {
         -webkit-border-radius: $radius;
