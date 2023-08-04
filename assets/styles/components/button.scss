@@ -1,0 +1,106 @@
+@use  "../abstract/" as *;
+
+.button{
+
+    @extend %flex-row-center;
+    @extend %transition--bg-color;
+
+    //? ========< Button Titre >========
+
+    &--heading{
+
+        @include radius(15px, "all");
+        color: $white;
+        
+        font-family: $ff-heading;
+        font-size:  clamp($fs-13, 0.2655rem + 1.7884vw,$fs-22);
+        font-weight: $fw-500;
+        
+        width: clamp(5.9375rem, -0.0076rem + 12.3696vw, 11.125rem);
+        height: clamp(1.70125rem, -0.0021rem + 3.544vw, 3.1875rem);
+
+        
+
+        &:hover{
+            background-color: $white;
+            color: $purple;
+        }
+
+        //* button button--heading button--heading--1 --> button header normal
+        &--1{
+
+            background-color: $blueLight;
+
+        }
+
+        //* button button--heading button--heading--2 --> Button header glassomorphic
+        &--2{
+            background-color: transparent;
+            backdrop-filter: $glass-30;
+
+        }
+
+        
+    }
+    //! ========< Button Titre >========
+
+
+    //? ========< Button format >========
+
+    //* button button--format --> button that choose format
+    &--format{
+        @include radius(30px, "all");
+        color: $white;
+        font-family: $ff-text;
+        // 30px -> 18px
+        font-size:  clamp($fs-13, 0.2655rem + 1.7884vw,$fs-22);
+        font-weight: $fw-500;
+
+        height: clamp(1.46875rem, 0.0004rem + 3.0551vw, 2.75rem);
+        width: clamp(7.7125rem, 0.0053rem + 16.0358vw, 14.4375rem);
+
+        background-color: transparent;
+        backdrop-filter: $glass-30;
+
+        //* button button--format--active --> button 
+        &--active{
+            background-color: $white;
+            color: $purple;
+            backdrop-filter: none;
+        }
+    }
+    //! ========< Button format >========
+
+    //? ========< Button okai >========
+
+    
+    &--okai{
+        @include radius(10px, "all");
+
+        color: $white;
+        font-family: $ff-text;
+        font-weight: $fw-500;
+        
+        font-size:  $fs-12;
+
+        //* button button--okai button--okai--footer --> button okai in footer 
+        &--footer{
+
+            width: 131px;
+            height: 25px;
+            background-color: $okaiGradient;
+
+            &:hover{
+                background-color: $okaiGradient3;
+            }
+        }
+
+        
+    }
+
+
+    //! ========< Button okai >========
+
+    
+    
+}
