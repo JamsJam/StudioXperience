@@ -3,7 +3,7 @@
 	{% block title %}Hello HomeController!{% endblock %}
 
 	{% block body %}
-	{{ encore_entry_script_tags('app') }}
+	{# {{ encore_entry_script_tags('app') }} #}
 	<style>
 	.swiper {
 		width: 99vw;
@@ -60,9 +60,9 @@
 	{% else %}
 	{% endif %}
 
-	 <div {{ react_component('MyComponent', { 'fullName': "Mark" }) }}>
+	 {# <div {{ react_component('MyComponent', { 'fullName': "Mark" }) }}>
         Loading... 
-    </div>
+    </div> #}
 
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
 	<script>

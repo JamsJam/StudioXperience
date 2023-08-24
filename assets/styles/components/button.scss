@@ -80,18 +80,19 @@
         color: $white;
         font-family: $ff-text;
         font-weight: $fw-500;
-        
         font-size:  $fs-12;
-
+        text-transform: capitalize;
+        
         //* button button--okai button--okai--footer --> button okai in footer 
         &--footer{
-
+            
+            
             width: 131px;
             height: 25px;
-            background-color: $okaiGradient;
+            background: $okaiGradient;
 
             &:hover{
-                background-color: $okaiGradient3;
+                background: $okaiGradient3;
             }
         }
 

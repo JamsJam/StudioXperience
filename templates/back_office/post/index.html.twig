@@ -9,9 +9,9 @@
 <h1> Affichage test</h1>
     
 {#? Si le poste est un podcast  #}
-<h2> block audio</h2>
+{# <h2> block audio</h2>
     <div id="play" style="width:100px;height:100px;background:navy"></div>
-    <div id="siri-container" style="background:#000"></div>
+    <div id="siri-container" style="background:#000"></div> #}
 
 {#? Si le post est une video  #}
 <h2> block video</h2>
@@ -23,7 +23,7 @@
         width="640"
         height="264"
         {# poster="MY_VIDEO_POSTER.jpg" #}
-        data-setup="{}"
+        {# data-setup="{}" #}
         >
         <source src="{{asset('./Videos/Animation-liste-Noir.mp4')}}" type="video/mp4" />
 
@@ -31,14 +31,14 @@
         <p class="vjs-no-js">
             To view this video please enable JavaScript, and consider upgrading to aweb browser that
 
-            <a href="https://videojs.com/html5-video-support/" target="_blank">
+            {# <a href="https://videojs.com/html5-video-support/" target="_blank"> #}
                 supports HTML5 video
             </a>
         </p>
-    </video>
+    </video> 
 
 <h2> block video avec pub</h2>
-    <video
+   <!-- <video
         id="my-video-add"
         class="video-js"
         controls
@@ -58,7 +58,7 @@
                 supports HTML5 video
             </a>
         </p>
-    </video>
+    </video> -->
 
 
 {% endblock %}

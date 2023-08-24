@@ -1,0 +1,74 @@
+@use  "../abstract/" as *;
+
+.navigation {
+    background: linear-gradient(8deg, #203470 0%, #101A38 100%);;
+
+    width: 100%;
+    height: 100px;
+
+    @extend %flex-row-space-between;
+
+    padding: 0 2rem;
+
+    box-shadow: 0px 2px 0px 5px #10101080;
+
+
+    .header1,.header2{
+        @extend %flex-row-space-around;
+        gap:2rem
+    }
+
+    .header1{
+
+        img{
+            width: 250px
+        }
+
+        #search-svg{
+            width: 30px;
+            height: 30px;
+            fill: white;
+            transform:rotateY(180deg)
+        }
+    }
+
+    .header2{
+
+        #account-svg,#favories-svg{
+
+            height: 40px;
+            fill: white;
+            transition: fill 0.1s ease-in-out;
+
+            &:hover{
+                fill: $pinkLight;
+                transition: fill 0.1s ease-in-out;
+            }
+        }
+    }
+
+
+    @media  screen and (max-width: 768px){
+        .header1{
+
+            gap:0.5rem;
+
+            img{
+                width: clamp(7.5rem, 1.9563rem + 27.7186vw, 15.625rem);
+            }
+
+            #search-svg{
+                width: 25px;
+                height: 25px;
+
+            }
+        }
+
+        .header2{
+
+            #account-svg,#favories-svg{
+                display: none;
+            }
+        }
+    }
+}

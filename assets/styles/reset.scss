@@ -7,3 +7,17 @@
     color: $white;
 }
 
+a{
+    text-decoration: none;
+    color: $white;
+}
+
+li{
+    list-style: none;
+}
+
+main{
+    min-height: calc(100vh - 100px);
+    background: $okaiGradient2;
+}
+
