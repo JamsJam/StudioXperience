@@ -13,19 +13,19 @@ use Symfony\Contracts\Translation\TranslatorInterface;
 class HomeController extends AbstractController
 {
     #[Route('/', name: 'app_home')]
-    public function index(FormatRepository $formatRepo, CategorieRepository $categorieRepo, PostRepository $postRepo, TranslatorInterface $translator): Response
+    public function index( TranslatorInterface $translator): Response
     {
-        $latestPost = $postRepo->findBy([],["id" => "DESC"], 20);
-        foreach ($latestPost as $post) {
-            $post->setTitre($translator->trans($post->getTitre(), domain: 'messages'));
-            $post->setDescription($translator->trans($post->getDescription(), domain: 'messages'));
+        // $latestPost = $postRepo->findBy([],["id" => "DESC"], 20);
+        // foreach ($latestPost as $post) {
+        //     $post->setTitre($translator->trans($post->getTitre(), domain: 'messages'));
+        //     $post->setDescription($translator->trans($post->getDescription(), domain: 'messages'));
 
 
-        }
+        // }
 
         return $this->render('front/home/index.html.twig', [
-            'latest_post' => $latestPost,
-            'controller_name' => 'HomeController',
+            // 'latest_post' => $latestPost,
+            // 'controller_name' => 'HomeController',
         ]);
     }
 }

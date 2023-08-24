@@ -32,7 +32,7 @@
 	}
 	</style>
 
-	<!-- Slider main container -->
+	{# <!-- Slider main container -->
 	{% if latest_post | length >= 20 %}
 		<div class="swiper">
 		<!-- Additional required wrapper -->
@@ -55,49 +55,52 @@
 			<div class="swiper-button-next"></div> #}
 
 			<!-- If we need scrollbar -->
-			<div class="swiper-scrollbar"></div>
-		</div>
-	{% else %}
-	{% endif %}
+			{# <div class="swiper-scrollbar"></div> #}
+		{# </div>  #}
+	{# {% else %} #}
+	{# {% endif %} #}
+		
 
 	 {# <div {{ react_component('MyComponent', { 'fullName': "Mark" }) }}>
         Loading... 
     </div> #}
-
+{# 
 	<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+ #}
+ 
 	<script>
 
-		const swiper = new Swiper('.swiper', {
-		// Optional parameters
-		direction: 'horizontal',
-		loop: true,
+		// const swiper = new Swiper('.swiper', {
+		// // Optional parameters
+		// direction: 'horizontal',
+		// loop: true,
 
-		// If we need pagination
-		pagination: {
-			el: '.swiper-pagination',
-		},
+		// // If we need pagination
+		// pagination: {
+		// 	el: '.swiper-pagination',
+		// },
 
-		// Navigation arrows
-		{# navigation: {
-			nextEl: '.swiper-button-next',
-			prevEl: '.swiper-button-prev',
-		}, #}
+		// // Navigation arrows
+		// {# navigation: {
+		// 	nextEl: '.swiper-button-next',
+		// 	prevEl: '.swiper-button-prev',
+		// }, #}
 
-		// And if we need scrollbar
-		scrollbar: {
-			el: '.swiper-scrollbar',
-		},
-		spaceBetween: 25,
-		slidesPerView : 5,
-		slidesPerGroup : 5,
+		// // And if we need scrollbar
+		// scrollbar: {
+		// 	el: '.swiper-scrollbar',
+		// },
+		// spaceBetween: 25,
+		// slidesPerView : 5,
+		// slidesPerGroup : 5,
 
-		//   autoplay: {
-		//     delay : 2000,
-		//     disableOnInteraction : false,
-		//     pauseOnMouseEnter: true,
-		//   }
-		});
+		// //   autoplay: {
+		// //     delay : 2000,
+		// //     disableOnInteraction : false,
+		// //     pauseOnMouseEnter: true,
+		// //   }
+		// });
 
-	</script>
+	 </script>
 
 	{% endblock %}
