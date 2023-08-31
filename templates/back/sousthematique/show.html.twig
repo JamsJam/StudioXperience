@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Sousthematique{% endblock %}
+
+{% block body %}
+    <h1>Sousthematique</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ sousthematique.id }}</td>
+            </tr>
+            <tr>
+                <th>SousTheme</th>
+                <td>{{ sousthematique.sousTheme }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_back_sousthematique_index') }}">back to list</a>
+
+    <a href="{{ path('app_back_sousthematique_edit', {'id': sousthematique.id}) }}">edit</a>
+
+    {{ include('back/sousthematique/_delete_form.html.twig') }}
+{% endblock %}

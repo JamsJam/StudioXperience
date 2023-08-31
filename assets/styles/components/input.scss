@@ -15,6 +15,28 @@
         color: $white;
         font-size: $fs-18;
         font-family: $ff-text;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+
+    &__textarea{
+        @include radius(20px, "all");
+        height: 180px;
+        width: 280px;
+        
+        background-color: $blueGray;
+        border: none;
+        padding-inline-start: 1rem;
+        
+        color: $white;
+        font-size: $fs-18;
+        font-family: $ff-text;
+
+        &:hover{
+            cursor: pointer;
+        }
     }
 
     &__checkbox{

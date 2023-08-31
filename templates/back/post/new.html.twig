@@ -1,0 +1,166 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Post{% endblock %}
+
+{% block body %}
+    <div class="postNew" {{ stimulus_controller("newformslide test-react module-form")}}>
+        <div class="loaderContainer" {{ stimulus_target("newformslide","loader")}}>
+            <span class="loader"></span>
+        </div>
+        <div class="lightboxContainer" {{ stimulus_target("module-form","lightboxContainer")}}>
+            <div class="lightbox" {{ stimulus_target("module-form","lightbox")}}>
+                <span class="close" {{ stimulus_action("module-form","closeLightbox",'click')}}>
+                    close
+                </span>
+            </div>
+        </div>
+        <h1>Nouveau post</h1>
+        <div class="formContainer" {{ stimulus_controller('preview')}}>
+            
+            <div class="formCP" >
+
+                <div class="buttonContainer">
+                    <button class="button button--format  " type="button" 
+                        {{ stimulus_action( 
+                            'newformslide', 
+                            'goToIndex', 
+                            'click', 
+                            {'index' : 0} 
+                        )|  stimulus_target(
+                                'newformslide',
+                                'btnformpart'
+                            )
+                        }}>part1</button>
+
+                    <button class="button button--format " type="button" 
+                        {{ stimulus_action( 
+                            'newformslide', 
+                            'goToIndex', 
+                            'click', 
+                            {'index' : 1} 
+                        )|  stimulus_target(
+                                'newformslide',
+                                'btnformpart'
+                            )
+                        }}>part2</button>
+
+                    <button class="button button--format " type="button" 
+                        {{ stimulus_action( 
+                            'newformslide', 
+                            'goToIndex', 
+                            'click', 
+                            {'index' : 2} 
+                        )|  stimulus_target(
+                                'newformslide',
+                                'btnformpart'
+                            )
+                        }}>part3</button>
+
+                </div>
+
+                {{ form_start(form) }}
+
+                    <div {{ stimulus_target('newformslide','formslide')}} class="formSlide">
+                        <div class="formfieldContainer" >
+                            {{ form_label(form.title) }}
+                            {{ form_widget(form.title)}}
+                        </div>
+
+                        <div class="formfieldContainer">
+                            {{ form_label(form.description) }}
+                            {{ form_widget(form.description) }}
+                        </div>
+                    </div>
+
+                    <div {{ stimulus_target('newformslide','formslide')}} class="formSlide">
+                        <div class="formfieldContainer">
+                            {{ form_label(form.thematique) }}
+                            {{ form_widget(form.thematique) }}
+                        </div>
+
+                        <div class="formfieldContainer">
+                            {{ form_label(form.sousThematiques) }}
+                            {{ form_widget(form.sousThematiques) }}
+                        </div>
+
+                        <div class="formfieldContainer">
+                            {{ form_label(form.type) }}
+                            {{ form_widget(form.type) }}
+                    
+                        </div>
+                        <div class="formfieldContainer">
+                            {{ form_label(form.publishAt) }}
+                            {{ form_widget(form.publishAt) }}
+                    
+                        </div>
+                        
+                    </div>
+
+                    <div {{ stimulus_target('newformslide','formslide')}} class="formSlide">
+                        <button type="button" {{ stimulus_action('module-form','fireLightbox')}}> Choisir le module </button>
+
+                        <div class="formfieldContainer">
+                            
+                            {{ form_widget(form.content) }}
+                    
+                        </div>
+                        
+                        <div class="formfieldContainer moduleChoosen" {{ stimulus_action('mudule-form','Module')}}>
+                        
+                        </div>
+                        {# <form {{ stimulus_action('mudule-form','getData')}} class="formfieldContainer"> #}
+                            
+                        {# </form> #}
+
+                    </div>
+
+                        {# <div class="formfieldContainer">
+                            {{ form_row(form.content) }}
+                        </div> #}
+                    <div class="buttonContainer">
+                        <button type="button" class="button button--format" {{stimulus_target('newformslide','previous')  | stimulus_action('newformslide','previous')}}>Previous</button>
+                        <button type="button" class="button button--format" {{stimulus_target('newformslide','next')  | stimulus_action('newformslide','next')}}>Next</button>
+                    </div>
+
+
+
+                    {# <button class="btn btn-primary">Create</button> #}
+                {{ form_end(form) }}
+                {# <textarea {{ stimulus_action('test-react', 'testFonction') }} id="" cols="30" rows="10"></textarea> #}
+            </div>
+
+            <div class="formPreview" >
+
+                {#! En-tete de l'article  #}
+
+                <div class="previewHeader">
+
+                    <h2 id="preview_title" class="titre titre--24-600" {{ stimulus_target('preview','titreoutput') }}>Titre de l' article</h2>
+                    <p id="preview_description" class="text text--20-600" {{ stimulus_target('preview','descriptionoutput') }}>
+                            La description est un text qui lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolorem recusandae consequuntur reprehenderit provident ab assumenda delectus, reiciendis quidem, voluptates tempora nobis eos magni! Sed aliquid corrupti laudantium accusantium ipsam ipsum neque mollitia aspernatur rem nisi numquam culpa pariatur itaque, eum quia voluptatem perspiciatis incidunt perferendis. Blanditiis exercitationem reprehenderit ipsam officia!
+                    </p>
+
+                </div>
+                    
+                {#! Contenu de l'article  #}
+                <div class="previewContent">
+
+                    <div {{ react_component('Article/Container',{'content':'[{"module": "module--TexteImage","content":{"texte":"Data for Module A","image": "https://picsum.photos/200/300.webp"}},{"module": "module--Texte","content":{"texte": "Data for Module A"}},{"module":"module--TexteImage","content":{"texte": "Data for Module A","image": "https://picsum.photos/200/300.webp"}}]'}) }}  {{ stimulus_target('test-react', 'reactContainer') }}>
+                        <span class="loader"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    {# {{ include('back/post/_form.html.twig') }} #}
+    
+
+    <a href="{{ path('app_back_post_index') }}">back to list</a>
+{% endblock %}
+{% block script %}
+
+{% endblock %}

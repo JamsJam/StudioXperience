@@ -1,0 +1,253 @@
+@use "../../../abstract/" as *;
+
+.postNew{
+    min-height: calc(100vh - 100px);
+    position: relative;
+
+    
+    h1{
+        text-align: center;
+        margin-block-end: 2rem ;
+    }
+
+    .formContainer{
+        width: 100%;
+        min-height: 590px;
+        height: calc(100vh - 200px);
+        display: grid;
+        grid-template-columns: 500px 1fr;
+        gap: 1rem;
+
+
+
+
+        //? ===========================
+        //? =========< Form >==========
+        //? ===========================
+
+
+
+
+        form{
+            width: 100%;
+            min-height: 440px;
+            /* height: calc(100% - 222px); */
+            padding: 1rem;
+            
+
+            
+            @extend %flex-column-space-around-center;
+            
+            #post_content{
+                display:none;
+            }
+
+            .formSlide{
+
+                height: calc(100% - 4rem);
+                max-height: 800px;
+                @extend %flex-column-space-around-center;
+            }
+
+            
+        }
+
+        .formCP{
+            height: 100%;
+            // padding-block-start: 2rem;
+            @extend %flex-column-space-around-center;
+
+
+            .formfieldContainer{
+                @extend %flex-column-space-around-center;
+                
+                margin-block: 1rem;
+            }
+        }
+
+
+        //? ===========================
+        //? ========< Preview >========
+        //? ===========================
+
+
+
+
+
+        .formPreview{
+
+            padding-inline: 1rem;
+            overflow-y: scroll;
+            margin-inline-end: 0.5rem;
+
+        &::-webkit-scrollbar {
+            width: 10px;               /* width of the entire scrollbar */
+          }
+
+        &::-webkit-scrollbar-track {
+            background-color: hsla(225, 56%, 28%, 0.33);
+            border-radius: 20px;
+            transition: background-color 1s ease-in-out;
+        }
+        
+        
+        &::-webkit-scrollbar-thumb {
+            background-color: hsla(225, 56%, 38%, 0.33);    /* color of the scroll thumb */
+            border-radius: 20px;       /* roundness of the scroll thumb */
+            border: 3px solid $okaiGradient2;  /* creates padding around scroll thumb */
+            transition: background-color 1s ease-in-out, oppacity 0.5s ease-in-out ;
+        }
+
+        &:hover::-webkit-scrollbar-track {
+            
+                /* color of the tracking area */
+                background-color: #203470;
+            
+        }
+        &:hover::-webkit-scrollbar-thumb  {
+            
+                /* color of the tracking area */
+                background-color: hsl(225, 56%, 38%)
+            
+        }
+
+            .previewHeader{
+                margin-bottom: 1rem;
+                h2{
+                    text-transform: capitalize;
+                    margin-block-end: 2rem
+                }
+            }
+
+
+
+
+
+        }
+        
+
+
+        //? ===========================
+        //? ========< Button >========
+        //? ===========================
+
+
+
+        .buttonContainer{
+            @extend %flex-row-space-around;
+            gap: 1rem;
+
+            .button--format{
+                height: 2rem;
+                width: 120px;
+                font-size: 1.125rem;
+            }
+        }
+    }
+
+
+
+
+    //? ===========================
+    //? =======< LightBox >========
+    //? ===========================
+
+    .lightboxContainer{
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 100%;
+        background: rgba(0,0,0,0.5);
+        z-index: 1000;
+        @extend %flex-column-center;
+        display: none;
+    
+    
+        .lightbox{
+            width: 500px;
+            height: 600px;
+            background-color: $white;
+            border-radius: 10px;
+            padding: 1rem;
+            position: relative;
+            
+            .close{
+                position: absolute;
+                top: 20px;
+                right: 20px;
+                padding: 1rem;
+                cursor: pointer;
+                color: #203470;
+            }
+        }
+
+        &--active{
+            display: flex;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+    //? ===========================
+    //? ========< Loader >=========
+    //? ===========================
+
+
+
+    .loaderContainer{
+        // @extend %flex-column-center;
+        height: 100vh;
+        width: 100%;
+
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        background: $okaiGradient2;
+        z-index: 1000;
+
+        
+    }
+    .loader {
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        animation: rotate 1s linear infinite;
+        
+        &::before {
+            content: "";
+            box-sizing: border-box;
+            position: absolute;
+            inset: 0px;
+            border-radius: 50%;
+            border: 5px solid #FFF;
+            animation: prixClipFix 2s linear infinite ;
+        }
+        
+            @keyframes rotate {
+            100%   {transform: rotate(360deg)}
+            }
+        
+            @keyframes prixClipFix {
+                0%   {clip-path:polygon(50% 50%,0 0,0 0,0 0,0 0,0 0)}
+                25%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 0,100% 0,100% 0)}
+                50%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,100% 100%,100% 100%)}
+                75%  {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 100%)}
+                100% {clip-path:polygon(50% 50%,0 0,100% 0,100% 100%,0 100%,0 0)}
+            }
+        }
+    }

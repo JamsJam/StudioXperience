@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Thematique{% endblock %}
+
+{% block body %}
+    <h1>Edit Thematique</h1>
+
+    {{ include('back/thematique/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_back_thematique_index') }}">back to list</a>
+
+    {{ include('back/thematique/_delete_form.html.twig') }}
+{% endblock %}

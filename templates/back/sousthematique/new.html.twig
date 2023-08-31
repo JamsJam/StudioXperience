@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Sousthematique{% endblock %}
+
+{% block body %}
+    <h1>Create new Sousthematique</h1>
+
+    {{ include('back/sousthematique/_form.html.twig') }}
+
+    <a href="{{ path('app_back_sousthematique_index') }}">back to list</a>
+{% endblock %}

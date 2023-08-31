@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Thematique{% endblock %}
+
+{% block body %}
+    <h1>Create new Thematique</h1>
+
+    {{ include('back/thematique/_form.html.twig') }}
+
+    <a href="{{ path('app_back_thematique_index') }}">back to list</a>
+{% endblock %}

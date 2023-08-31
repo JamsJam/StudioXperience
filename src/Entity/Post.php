@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\PostRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PostRepository::class)]
@@ -17,7 +18,7 @@ class Post
 
     #[ORM\ManyToOne(inversedBy: 'posts')]
     #[ORM\JoinColumn(nullable: false)]
-    private ?thematique $thematique = null;
+    private ?Thematique $thematique = null;
 
     #[ORM\ManyToMany(targetEntity: Sousthematique::class, inversedBy: 'posts')]
     private Collection $sousThematiques;
@@ -38,6 +39,16 @@ class Post
     #[ORM\JoinColumn(nullable: false)]
     private ?Type $type = null;
 
+    #[ORM\ManyToOne(inversedBy: 'posts')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?Mediatheque $poster = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $description = null;
+
+    #[ORM\Column]
+    private ?\DateTimeImmutable $createdAt = null;
+
     public function __construct()
     {
         $this->sousThematiques = new ArrayCollection();
@@ -48,12 +59,12 @@ class Post
         return $this->id;
     }
 
-    public function getThematique(): ?thematique
+    public function getThematique(): ?Thematique
     {
         return $this->thematique;
     }
 
-    public function setThematique(?thematique $thematique): static
+    public function setThematique(?Thematique $thematique): static
     {
         $this->thematique = $thematique;
 
@@ -140,6 +151,42 @@ class Post
     public function setType(?Type $type): static
     {
         $this->type = $type;
+
+        return $this;
+    }
+
+    public function getPoster(): ?Mediatheque
+    {
+        return $this->poster;
+    }
+
+    public function setPoster(?Mediatheque $poster): static
+    {
+        $this->poster = $poster;
+
+        return $this;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function setDescription(?string $description): static
+    {
+        $this->description = $description;
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAt): static
+    {
+        $this->createdAt = $createdAt;
 
         return $this;
     }

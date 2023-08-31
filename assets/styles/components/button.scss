@@ -59,8 +59,14 @@
         height: clamp(1.46875rem, 0.0004rem + 3.0551vw, 2.75rem);
         width: clamp(7.7125rem, 0.0053rem + 16.0358vw, 14.4375rem);
 
-        background-color: transparent;
-        backdrop-filter: $glass-30;
+        background-color: rgb(255 255 255 / 10%);
+        backdrop-filter: blur(30px);
+        
+        
+        &:hover:not(.button--format--active){
+            background-color: rgb(255 255 255 / 25%);
+            
+        }
 
         //* button button--format--active --> button 
         &--active{
