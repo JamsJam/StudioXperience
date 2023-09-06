@@ -7,17 +7,31 @@
         <div class="loaderContainer" {{ stimulus_target("newformslide","loader")}}>
             <span class="loader"></span>
         </div>
-        <div class="lightboxContainer" {{ stimulus_target("module-form","lightboxContainer")}}>
-            <div class="lightbox" {{ stimulus_target("module-form","lightbox")}}>
-                <span class="close" {{ stimulus_action("module-form","closeLightbox",'click')}}>
-                    close
-                </span>
+
+        {#? Light Box #}
+
+            <div class="lightboxContainer" {{ stimulus_target("module-form","lightboxContainer")}}>
+                <div class="lightbox" {{ stimulus_target("module-form","lightbox")}}>
+                    
+                    <h2 class="titre titre--24--500">Choisissez Votre module</h2>
+
+                    <div class="allModule" {{ stimulus_target("module-form","displayModule")}}>
+
+                    </div>
+                    
+                    <span class="close" {{ stimulus_action("module-form","closeLightbox",'click')}}>
+                        close
+                    </span>
+                </div>
             </div>
-        </div>
-        <h1>Nouveau post</h1>
+
+        {#! LightBox #}
+
+
+
         <div class="formContainer" {{ stimulus_controller('preview')}}>
             
-            <div class="formCP" >
+            <div class="formCP" {{ stimulus_target("module-form","editContentContainer")}}>
 
                 <div class="buttonContainer">
                     <button class="button button--format  " type="button" 
@@ -97,16 +111,39 @@
                     </div>
 
                     <div {{ stimulus_target('newformslide','formslide')}} class="formSlide">
-                        <button type="button" {{ stimulus_action('module-form','fireLightbox')}}> Choisir le module </button>
+                        <div class='buttonContainer'>
+                            <button type="button" class="button button--format text text--18-500" {{ stimulus_action('module-form','fireLightbox')}}> Ajouter un module </button>
+                            <button type="button" class="button button--format text text--18-500" {{ stimulus_action('module-form','fireLightbox')}}> ChangeOrder </button>
+                        </div>
 
-                        <div class="formfieldContainer">
+                        {# <div class="formfieldContainer"> #}
                             
                             {{ form_widget(form.content) }}
                     
-                        </div>
+                        {# </div> #}
                         
-                        <div class="formfieldContainer moduleChoosen" {{ stimulus_action('mudule-form','Module')}}>
-                        
+                        <div class=" moduleChoosen" {{ stimulus_action('module-form','Module')}}>
+                            
+                            {#! Container neo pour les modules #}
+                            <div class="moduleChoosen__list" {{ stimulus_target('module-form','moduleList')}}>
+                                
+
+                                {# Module individuel generé par stimulus #}
+                                {# <div class="moduleChoosen__module">
+                                    
+                                    
+                                    
+                                        <p class="titre titre--20--500">MODULE TEXTE</p>
+                                        <div class="module__btns">
+                                            <button type="button" class="button button--format">Modifier</button>
+                                            <button type="button" class="button button--format">Supprimer</button>
+                                        </div>
+                                    
+
+                                </div> #}
+
+
+                            </div>
                         </div>
                         {# <form {{ stimulus_action('mudule-form','getData')}} class="formfieldContainer"> #}
                             
@@ -130,6 +167,7 @@
             </div>
 
             <div class="formPreview" >
+                            <h1>Nouveau post</h1>
 
                 {#! En-tete de l'article  #}
 
@@ -145,7 +183,7 @@
                 {#! Contenu de l'article  #}
                 <div class="previewContent">
 
-                    <div {{ react_component('Article/Container',{'content':'[{"module": "module--TexteImage","content":{"texte":"Data for Module A","image": "https://picsum.photos/200/300.webp"}},{"module": "module--Texte","content":{"texte": "Data for Module A"}},{"module":"module--TexteImage","content":{"texte": "Data for Module A","image": "https://picsum.photos/200/300.webp"}}]'}) }}  {{ stimulus_target('test-react', 'reactContainer') }}>
+                    <div id='react-container' {{ react_component('Article/Container',{'content':false}) }}  {{ stimulus_target('test-react', 'reactContainer') }}>
                         <span class="loader"></span>
                     </div>
 

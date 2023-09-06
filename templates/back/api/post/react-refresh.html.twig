@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello PostController!{% endblock %}
+
+{% block body %}
+
+
+    <div id='react-container' {{ react_component('Article/Container',{'content':  data? data|json_encode  }) }}  {{ stimulus_target('test-react', 'reactContainer') }}>
+        <span class="loader"></span>
+    </div>
+{% endblock %}

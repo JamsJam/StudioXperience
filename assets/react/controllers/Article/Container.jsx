@@ -10,10 +10,7 @@ export default function Container(props) {
 
   const [data, setData] = useState(props.content);
 
-  useEffect(() => {
-    console.log(JSON.parse(data));
-  }, [data]);
-  
+  console.log(JSON.parse(data));
   
   
 
@@ -22,15 +19,16 @@ export default function Container(props) {
   return (
     <div>
       
-      {JSON.parse(data).map((item, index) => {
-        // const modulePath = `./Modules/${item.module.slice(8)}/${item.module.slice(8)}.jsx`;
+      {data && JSON.parse(data).map((item, index) => {
+        // const modulePath = `./Modules/${item.content.module.slice(8)}/${item.module.slice(8)}.jsx`;
         
         // Si le module a déjà été importé, utilisez la référence existante
-        const  ChosedModule =  importedModules[`./Modules/${item.module.slice(8)}/${item.module.slice(8)}.jsx`] || lazy(() => import(`./Modules/${item.module.slice(8)}/${item.module.slice(8)}.jsx`));
+        console.log(item.content, item.content.module, item.content.module.slice(8), `${item.content.module.slice(8)}.jsx`);
+        const  ChosedModule =  importedModules[`./Modules/${item.content.module.slice(8)}/${item.content.module.slice(8)}.jsx`] || lazy(() => import(`./Modules/${item.content.module.slice(8)}/${item.content.module.slice(8)}.jsx`));
         
         // Stockez la référence au module importé
-        if (!importedModules[`./Modules/${item.module.slice(8)}/${item.module.slice(8)}.jsx`]) {
-          importedModules[`./Modules/${item.module.slice(8)}/${item.module.slice(8)}.jsx`] = ChosedModule;
+        if (!importedModules[`./Modules/${item.content.module.slice(8)}/${item.content.module.slice(8)}.jsx`]) {
+          importedModules[`./Modules/${item.content.module.slice(8)}/${item.content.module.slice(8)}.jsx`] = ChosedModule;
         }
         
         return (
@@ -43,6 +41,7 @@ export default function Container(props) {
           </div>
         );
       })}
+    
     </div>
   )
 }
